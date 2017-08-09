@@ -75,7 +75,8 @@ public class LineBotController
 
                 if (!msgText.contains("bot leave")){
                     try {
-                        getMessageData(msgText, idTarget);
+//                        getMessageData(msgText, idTarget);
+                        getMessageData(msgText, payload.events[0].replyToken);
                     } catch (IOException e) {
                         System.out.println("Exception is raised ");
                         e.printStackTrace();

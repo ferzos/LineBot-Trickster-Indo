@@ -9,6 +9,7 @@ import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -24,6 +25,7 @@ public class LineBotController
 {
     boolean isStart = false;
     String startMessage = "Silahkan pilih kode soal: 1-10";
+    String endMessage = "Game berakhir";
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -100,7 +102,15 @@ public class LineBotController
 
     private void getMessageData(String message, String targetID) throws IOException{
         if (isStart) {
-            replyToUser(targetID, "Udah mulai nih");
+            if (message.equalsIgnoreCase("end the game")) {
+                isStart = !isStart;
+                replyToUser(targetID, endMessage);
+            } else if (NumberUtils.isDigits(message)) {
+                replyToUser(targetID, message);
+            }
+            else {
+                replyToUser(targetID, startMessage);
+            }
         } else {
             if (message.equalsIgnoreCase("start")) {
                 isStart = !isStart;

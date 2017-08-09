@@ -22,6 +22,8 @@ import java.io.IOException;
 @RequestMapping(value="/linebot")
 public class LineBotController
 {
+    String tes = "yuk kita mulai";
+
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
     String lChannelSecret;
@@ -96,10 +98,16 @@ public class LineBotController
     }
 
     private void getMessageData(String message, String targetID) throws IOException{
-        if (message!=null){
-//            pushMessage(targetID, message);
+        if (message.equalsIgnoreCase("start")) {
+            replyToUser(targetID, tes);
+        } else {
             replyToUser(targetID, message);
         }
+
+//        if (message!=null){
+////            pushMessage(targetID, message);
+//            replyToUser(targetID, message);
+//        }
     }
 
     private void replyToUser(String rToken, String messageToUser){

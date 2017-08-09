@@ -96,14 +96,14 @@ public class LineBotController
 
     private void getMessageData(String message, String targetID) throws IOException{
         if (message!=null){
-            pushMessage(targetID, message);
+//            pushMessage(targetID, message);
+            replyToUser(targetID, message);
         }
     }
 
     private void replyToUser(String rToken, String messageToUser){
-//        TextMessage textMessage = new TextMessage(messageToUser);
-        StickerMessage stickerMessage = new StickerMessage("1","106");
-        ReplyMessage replyMessage = new ReplyMessage(rToken, stickerMessage);
+        TextMessage textMessage = new TextMessage(messageToUser);
+        ReplyMessage replyMessage = new ReplyMessage(rToken, textMessage);
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)

@@ -103,6 +103,7 @@ public class LineBotController
             replyToUser(targetID, "Udah mulai nih");
         } else {
             if (message.equalsIgnoreCase("start")) {
+                isStart = !isStart;
                 replyToUser(targetID, startMessage);
             } else {
                 replyToUser(targetID, "Silahkan ketik \"start\" untuk memulai permainan ");

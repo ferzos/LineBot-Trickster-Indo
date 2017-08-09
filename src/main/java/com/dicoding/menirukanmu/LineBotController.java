@@ -22,7 +22,8 @@ import java.io.IOException;
 @RequestMapping(value="/linebot")
 public class LineBotController
 {
-    String tes = "yuk kita mulai";
+    boolean isStart = false;
+    String startMessage = "Silahkan pilih kode soal: 1-10";
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -77,7 +78,7 @@ public class LineBotController
 
                 if (!msgText.contains("bot leave")){
                     try {
-//                        getMessageData(msgText, idTarget);
+//                      getMessageData(msgText, idTarget);
                         getMessageData(msgText, payload.events[0].replyToken);
                     } catch (IOException e) {
                         System.out.println("Exception is raised ");
@@ -98,10 +99,14 @@ public class LineBotController
     }
 
     private void getMessageData(String message, String targetID) throws IOException{
-        if (message.equalsIgnoreCase("start")) {
-            replyToUser(targetID, tes);
+        if (isStart) {
+            replyToUser(targetID, "Udah mulai nih");
         } else {
-            replyToUser(targetID, message);
+            if (message.equalsIgnoreCase("start")) {
+                replyToUser(targetID, startMessage);
+            } else {
+                replyToUser(targetID, "Silahkan ketik \"start\" untuk memulai permainan ");
+            }
         }
 
 //        if (message!=null){

@@ -6,7 +6,6 @@ import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.client.LineSignatureValidator;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
-import com.linecorp.bot.model.message.Message;
 import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
@@ -18,8 +17,6 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping(value="/linebot")
@@ -104,12 +101,9 @@ public class LineBotController
     }
 
     private void replyToUser(String rToken, String messageToUser){
-        List<Message> arrMessage = new ArrayList<>();
-        TextMessage textMessage = new TextMessage(messageToUser);
+//        TextMessage textMessage = new TextMessage(messageToUser);
         StickerMessage stickerMessage = new StickerMessage("1","106");
-        arrMessage.add(textMessage);
-        arrMessage.add(stickerMessage);
-        ReplyMessage replyMessage = new ReplyMessage(rToken, arrMessage);
+        ReplyMessage replyMessage = new ReplyMessage(rToken, stickerMessage);
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)

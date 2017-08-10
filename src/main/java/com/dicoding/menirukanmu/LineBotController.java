@@ -113,8 +113,6 @@ public class LineBotController
 
         // Game dimulai
         if (isStart) {
-
-
             // User menghentikan permainan
             if (message.equalsIgnoreCase("end the game")) {
                 isStart = false;
@@ -134,8 +132,7 @@ public class LineBotController
                     isStart = false;
                     replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
                 } else {
-//                    replyToUser(targetID, "Salah !!");
-                    replyToUser(targetID, soal1Answer);
+                    replyToUser(targetID, "Salah !!");
                 }
             }
         }
@@ -159,7 +156,7 @@ public class LineBotController
                         soal1.put(2, "Kura-kura");
                         soal1.put(3, "Amanah");
                         soal1.put(4, "Kacamata");
-                        int soalNumber = (int) (Math.random() * (5 - 1)) + 1;
+                        int soalNumber = (int) (Math.random() * (4 - 0));
                         String soal = soal1.get(soalNumber);
                         soal1Answer = soalNumber + "000";
                         soalBundle = "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal + " berapa ?";

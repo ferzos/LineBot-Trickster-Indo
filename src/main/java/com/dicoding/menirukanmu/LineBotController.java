@@ -90,7 +90,7 @@ public class LineBotController
             }
 
             if (!payload.events[0].message.type.equals("text")){
-                replyToUser(payload.events[0].replyToken, "Unknown message");
+//                replyToUser(payload.events[0].replyToken, startMessage);
             } else {
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
@@ -173,7 +173,7 @@ public class LineBotController
                         soalBundle = "";
                         soal2Pertama.clear();
                         soal2Kedua.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + arrInput[2] + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar\n, " + message + "\n\n" +endMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }

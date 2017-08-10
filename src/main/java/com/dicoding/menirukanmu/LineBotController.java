@@ -20,6 +20,7 @@ import retrofit2.Response;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.TreeMap;
 
 @RestController
 @RequestMapping(value="/linebot")
@@ -28,10 +29,11 @@ public class LineBotController
     boolean isStart = false;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n1. Mata-Mati-Mitu";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
-    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
-    ArrayList<String> soal;
-    ArrayList<Boolean> answerStatus;
-    StringBuilder builder = new StringBuilder();
+//    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
+//    ArrayList<String> soal;
+//    ArrayList<Boolean> answerStatus;
+//    StringBuilder builder = new StringBuilder();
+    TreeMap<Integer, String> soal1;
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -145,7 +147,14 @@ public class LineBotController
                     // Numbernya pada range yang benar
                     if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= 1) {
                         // Buat soal dan mulai permainan
-                        replyToUser(targetID, "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \nKacamata berapa ?");
+                        soal1 = new TreeMap<>();
+                        soal1.put(1, "Kacamata");
+                        soal1.put(2, "Bahaya");
+                        soal1.put(3, "Kura-kura");
+                        soal1.put(4, "Jagung");
+                        soal1.put(5, "Bensin");
+                        int randomNumber = (int) (Math.random() * (5 - 1)) + 1;
+                        replyToUser(targetID, "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal1.get(randomNumber) + "berapa ?");
                         isStart = true;
                     }
                     // Number pada range yang salah

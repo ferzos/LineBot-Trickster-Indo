@@ -38,7 +38,6 @@ public class LineBotController
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
 
-
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
     String lChannelSecret;
@@ -74,7 +73,7 @@ public class LineBotController
                 replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Trido. Mari kita bermain :)");
             }
             if (payload.events[0].source.type.equals("room")){
-                replyToUser(payload.events[0].replyToken, "Hello Room");
+                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Trido. Mari kita bermain :)");
             }
         } else if (eventType.equals("message")){
             if (payload.events[0].source.type.equals("group")){
@@ -167,8 +166,6 @@ public class LineBotController
                         soal2Pertama.clear();
                         soal2Kedua.clear();
                         replyToUser(targetID, "Ya kamu benar\n" + endMessage);
-                    } else {
-                        replyToUser(targetID, message);
                     }
                 }
             }
@@ -239,6 +236,8 @@ public class LineBotController
                 {
                     replyToUser(targetID, startMessage);
                 }
+            } else {
+                replyToUser(targetID, message);
             }
         }
 //        // Game udah dimulai

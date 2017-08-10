@@ -34,9 +34,10 @@ public class LineBotController
 //    StringBuilder builder = new StringBuilder();
     String soalBundle = "";
     TreeMap<Integer, String> soal1;
+    String soal1Answer = "";
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
-    String soal1Answer = "";
+
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -153,7 +154,16 @@ public class LineBotController
                         replyToUser(targetID, "Salah !!");
                     }
                 } else if (flagSoal == 2) {
-                    replyToUser(targetID, "Ini buat jawab soal 2");
+                    if (arrInput[0].equalsIgnoreCase("yang") && arrInput[1].equalsIgnoreCase("ketiga")) {
+                        isStart = false;
+                        flagSoal = 0;
+                        soalBundle = "";
+                        soal2Pertama.clear();
+                        soal2Kedua.clear();
+                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                    } else {
+                        replyToUser(targetID, "Salah !!");
+                    }
                 }
             }
         }
@@ -209,7 +219,7 @@ public class LineBotController
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
                             soalBundle = "Game Dimulai \n============\n\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua +"\nyang ketiga apa ?";
-                            replyToUser(targetID, "Masuk soal 2");
+                            replyToUser(targetID, soalBundle);
                             isStart = true;
                         }
                     }

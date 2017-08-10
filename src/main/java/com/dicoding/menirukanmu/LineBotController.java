@@ -293,8 +293,8 @@ public class LineBotController
                             soal4.put(0,"7+5+3");
                             soal4.put(1,"9+1+4");
                             soal4.put(2,"8+2");
-                            soal4.put(3,"6+9+0+5+1+3");
-                            soal4.put(4,"8+2+1+7+3+9+6");
+                            soal4.put(3,"6+9+0+4+1+3");
+                            soal4.put(4,"8+2+1+7+3+9+6+4");
 
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal4.get(soalNumber);

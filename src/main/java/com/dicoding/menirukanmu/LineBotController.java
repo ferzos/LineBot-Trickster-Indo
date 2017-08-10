@@ -123,18 +123,19 @@ public class LineBotController
                 // Input ada
                 if(soal.contains(message.toLowerCase())) {
                     for (int i = 0 ; i < soal.size() ; i++) {
-                        if(soal.get(i).equalsIgnoreCase(message.toLowerCase())){
-                            answerStatus.set(i, true);
+                        if(soal.get(i).equalsIgnoreCase(message)){
+                            answerStatus.set(i, Boolean.TRUE);
+                            replyToUser(targetID, "ada nih" + soal.get(i));
                         }
                     }
-                    for (int i = 0 ; i < soal.size() ; i++) {
-                        if(answerStatus.get(i)){
-                            builder.append(i+1 + ". " + soal.get(i));
-                        } else {
-                            builder.append(i+1 + ". ");
-                        }
-                    }
-                    replyToUser(targetID, "ada bro");
+//                    for (int i = 0 ; i < soal.size() ; i++) {
+//                        if(answerStatus.get(i)){
+//                            builder.append(i+1 + ". " + soal.get(i));
+//                        } else {
+//                            builder.append(i+1 + ". ");
+//                        }
+//                    }
+//                    replyToUser(targetID, builder.toString());
                 }
             }
         }

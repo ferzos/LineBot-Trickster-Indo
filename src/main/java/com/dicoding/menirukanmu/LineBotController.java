@@ -67,6 +67,7 @@ public class LineBotController
         String msgText = " ";
         String idTarget = " ";
         String eventType = payload.events[0].type;
+        String userId = "";
 
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
@@ -89,11 +90,16 @@ public class LineBotController
             } else {
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
+                userId = payload.events[0].source.userId;
 
                 if (!msgText.contains("bye trido")){
                     try {
-//                      getMessageData(msgText, idTarget);
-                        getMessageData(msgText, payload.events[0].replyToken);
+                        // Ini ori
+                        // getMessageData(msgText, idTarget);
+
+//                        getMessageData(msgText, payload.events[0].replyToken);
+
+                        getMessageData(userId, payload.events[0].replyToken);
                     } catch (IOException e) {
                         System.out.println("Exception is raised ");
                         e.printStackTrace();
@@ -162,7 +168,7 @@ public class LineBotController
                         soal2Kedua.clear();
                         replyToUser(targetID, "Ya kamu benar\n" + endMessage);
                     } else {
-                        replyToUser(targetID, "Salah !!");
+                        replyToUser(targetID, message);
                     }
                 }
             }

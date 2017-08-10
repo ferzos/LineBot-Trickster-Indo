@@ -19,6 +19,7 @@ import retrofit2.Response;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 
 @RestController
 @RequestMapping(value="/linebot")
@@ -27,7 +28,10 @@ public class LineBotController
     boolean isStart = false;
     String startMessage = "Silahkan ketik \"start <kode soal 1-10>\" untuk memulai permainan";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
+    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
     ArrayList<String> soal;
+    ArrayList<Boolean> answerStatus;
+    StringBuilder builder = new StringBuilder();
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -111,15 +115,26 @@ public class LineBotController
             if (message.equalsIgnoreCase("end the game")) {
                 isStart = false;
                 soal.clear();
+                answerStatus.clear();
                 replyToUser(targetID, endMessage);
             }
             // User masukin input
             else {
-                if(soal.contains(arrInput[0].toLowerCase())) {
+                // Input ada
+                if(soal.contains(message.toLowerCase())) {
+                    for (int i = 0 ; i < soal.size() ; i++) {
+                        if(soal.get(i).equalsIgnoreCase(message.toLowerCase())){
+                            answerStatus.set(i, true);
+                        }
+                    }
+                    for (int i = 0 ; i < soal.size() ; i++) {
+                        if(answerStatus.get(i)){
+                            builder.append(i+1 + ". " + soal.get(i));
+                        } else {
+                            builder.append(i+1 + ". ");
+                        }
+                    }
                     replyToUser(targetID, "ada bro");
-                }
-                else {
-                    replyToUser(targetID, "ga ada bro");
                 }
             }
         }
@@ -141,10 +156,12 @@ public class LineBotController
                             soal = new ArrayList<>();
                             soal.add("luffy");
                             soal.add("roronoa");
-                            soal.add("nami");
                             soal.add("usopp");
                             soal.add("sanji");
-                            replyToUser(targetID, "Game Dimulai \n============");
+                            soal.add("robin");
+                            answerStatus = new ArrayList<>(soal.size());
+                            Collections.fill(answerStatus, Boolean.FALSE);
+                            replyToUser(targetID, "Game Dimulai \n============\n\n" + soal1Message);
                             isStart = true;
                         }
                     }

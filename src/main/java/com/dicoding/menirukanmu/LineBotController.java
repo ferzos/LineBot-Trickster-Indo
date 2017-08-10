@@ -114,7 +114,7 @@ public class LineBotController
         int soalNumber = 0;
         String soal = "";
         String soalBundle = "";
-        String answer = "";
+        String answer = "tes";
 
         // Game dimulai
         if (isStart) {

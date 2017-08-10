@@ -138,7 +138,7 @@ public class LineBotController
                     replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
                 } else {
 //                    replyToUser(targetID, "Salah !!");
-                    replyToUser(targetID, answer);
+                    replyToUser(targetID, soalNumber+"");
                 }
             }
         }
@@ -165,7 +165,6 @@ public class LineBotController
                         soalNumber = (int) (Math.random() * (5 - 1)) + 1;
                         soal = soal1.get(soalNumber);
                         soalBundle = "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal + " berapa ?";
-                        answer = soalNumber + "000";
                         replyToUser(targetID, soalBundle);
                         isStart = true;
                     }

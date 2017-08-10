@@ -111,6 +111,11 @@ public class LineBotController
     private void getMessageData(String message, String targetID) throws IOException{
         String[] arrInput = message.split(" ");
 
+        int soalNumber = 0;
+        String soal = "";
+        String soalBundle = "";
+        String answer = "";
+
         // Game dimulai
         if (isStart) {
             // User menghentikan permainan
@@ -120,12 +125,15 @@ public class LineBotController
             }
             // User minta soal
             else if (message.equalsIgnoreCase("soal")) {
-                replyToUser(targetID, "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \nKacamata berapa ?");
+                replyToUser(targetID, soal);
             }
             // User masukin input
             else {
                 // Input ada
-                if(message.equalsIgnoreCase("4000")) {
+                if(message.equalsIgnoreCase("gratis") && answer.equalsIgnoreCase("0000")) {
+                    isStart = false;
+                    replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
+                } if(message.equalsIgnoreCase(answer)) {
                     isStart = false;
                     replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
                 } else {
@@ -148,13 +156,16 @@ public class LineBotController
                     if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= 1) {
                         // Buat soal dan mulai permainan
                         soal1 = new TreeMap<>();
-                        soal1.put(1, "Kacamata");
-                        soal1.put(2, "Bahaya");
-                        soal1.put(3, "Kura-kura");
-                        soal1.put(4, "Jagung");
-                        soal1.put(5, "Bensin");
-                        int randomNumber = (int) (Math.random() * (5 - 1)) + 1;
-                        replyToUser(targetID, "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal1.get(randomNumber) + "berapa ?");
+                        soal1.put(0, "Bensin");
+                        soal1.put(1, "Pagi");
+                        soal1.put(2, "Kura-kura");
+                        soal1.put(3, "Amanah");
+                        soal1.put(4, "Kacamata");
+                        soalNumber = (int) (Math.random() * (5 - 1)) + 1;
+                        soal = soal1.get(soalNumber);
+                        soalBundle = "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal + " berapa ?";
+                        answer = soalNumber + "000";
+                        replyToUser(targetID, soalBundle);
                         isStart = true;
                     }
                     // Number pada range yang salah

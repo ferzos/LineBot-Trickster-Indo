@@ -126,6 +126,8 @@ public class LineBotController
                         if(soal.get(i).equalsIgnoreCase(message)){
                             answerStatus.set(i, Boolean.TRUE);
                             replyToUser(targetID, "ada nih" + soal.get(i));
+                        } else {
+                            replyToUser(targetID, "ga ada nih");
                         }
                     }
 //                    for (int i = 0 ; i < soal.size() ; i++) {

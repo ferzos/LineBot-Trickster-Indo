@@ -108,14 +108,19 @@ public class LineBotController
         // Game udah dimulai
         if (isStart) {
             // User menghentikan permainan
-            if (arrInput[0].equalsIgnoreCase("end the game")) {
+            if (message.equalsIgnoreCase("end the game")) {
                 isStart = false;
                 soal.clear();
                 replyToUser(targetID, endMessage);
             }
             // User masukin input
             else {
-                replyToUser(targetID, "Game Dimulai nih :)");
+                if(soal.contains(arrInput[0].toLowerCase())) {
+                    replyToUser(targetID, "ada bro");
+                }
+                else {
+                    replyToUser(targetID, "ga ada bro");
+                }
             }
         }
         // Game belum dimulai
@@ -134,12 +139,12 @@ public class LineBotController
                         // Buat soal dan mulai permainan
                         if (kodeSoal == 1) {
                             soal = new ArrayList<>();
-                            soal.add("Luffy");
-                            soal.add("Roronoa");
-                            soal.add("Nami");
-                            soal.add("Usopp");
-                            soal.add("Sanji");
-                            replyToUser(targetID, "Game Dimulai \n ============");
+                            soal.add("luffy");
+                            soal.add("roronoa");
+                            soal.add("nami");
+                            soal.add("usopp");
+                            soal.add("sanji");
+                            replyToUser(targetID, "Game Dimulai \n============");
                             isStart = true;
                         }
                     }

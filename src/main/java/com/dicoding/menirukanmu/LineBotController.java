@@ -137,7 +137,8 @@ public class LineBotController
                     isStart = false;
                     replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
                 } else {
-                    replyToUser(targetID, "Salah !!");
+//                    replyToUser(targetID, "Salah !!");
+                    replyToUser(targetID, answer);
                 }
             }
         }

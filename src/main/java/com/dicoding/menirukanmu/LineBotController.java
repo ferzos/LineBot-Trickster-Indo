@@ -107,7 +107,16 @@ public class LineBotController
 
         // Game udah dimulai
         if (isStart) {
-            replyToUser(targetID, "Game Dimulai nih :)");
+            // User menghentikan permainan
+            if (arrInput[0].equalsIgnoreCase("end the game")) {
+                isStart = false;
+                soal.clear();
+                replyToUser(targetID, endMessage);
+            }
+            // User masukin input
+            else {
+                replyToUser(targetID, "Game Dimulai nih :)");
+            }
         }
         // Game belum dimulai
         else {
@@ -122,7 +131,7 @@ public class LineBotController
                     int kodeSoal = Integer.parseInt(arrInput[1]);
                     // Numbernya pada range yang benar
                     if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) < 11) {
-                        // CRUMBLES
+                        // Buat soal dan mulai permainan
                         if (kodeSoal == 1) {
                             soal = new ArrayList<>();
                             soal.add("Luffy");
@@ -144,10 +153,6 @@ public class LineBotController
                 {
                     replyToUser(targetID, startMessage);
                 }
-            } else if (arrInput[0].equalsIgnoreCase("end the game")) {
-                isStart = false;
-                soal.clear();
-                replyToUser(targetID, endMessage);
             }
         }
 //        if (isStart) {

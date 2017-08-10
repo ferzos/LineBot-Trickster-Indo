@@ -26,7 +26,7 @@ public class LineBotController
 {
     boolean isStart = false;
     int flagSoal = 0;
-    int JUMLAH_SOAL = 3;
+    int JUMLAH_SOAL = 4;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n1. Mata-Mati-Mitu\n2. Yang ketiga\n3. Tepok Nyamuk";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
 //    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
@@ -40,6 +40,8 @@ public class LineBotController
     ArrayList<String> soal2Kedua;
     ArrayList<String> soal3;
     String soal3answer = "";
+    TreeMap<Integer, String> soal4;
+    String soal4Answer = "";
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -135,6 +137,8 @@ public class LineBotController
                 soal2Kedua.clear();
                 soal3.clear();
                 soal3answer = "";
+                soal4.clear();
+                soal4Answer = "";
                 replyToUser(targetID, endMessage);
             }
             // User minta soal
@@ -181,6 +185,17 @@ public class LineBotController
                         soal3.clear();
                         replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" +endMessage);
                         soal3answer = "";
+                    } else {
+                        replyToUser(targetID, "Salah !!");
+                    }
+                } else if (flagSoal == 4) {
+                    if(message.equalsIgnoreCase(soal4Answer)) {
+                        isStart = false;
+                        flagSoal = 0;
+                        soalBundle = "";
+                        soal4.clear();
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal4Answer + "\n\n" +endMessage);
+                        soal4Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }
@@ -252,8 +267,25 @@ public class LineBotController
                             soal3.add("Coba itung berapa nyamuk yang mati");
 
                             int soalNumber = (int) (Math.random() * (4 - 0));
-                            soalBundle = "Plok !! Plok !! Plok !! Plok !! Plok !! \n" + soal3.get(soalNumber) + " ?";
+                            soalBundle = "Game Dimulai \n============\n\nPlok !! Plok !! Plok !! Plok !! Plok !! \n" + soal3.get(soalNumber) + " ?";
                             soal3answer = soal3.get(soalNumber).split(" ").length + "";
+                            replyToUser(targetID, soalBundle);
+                            isStart = true;
+                        } else if (Integer.parseInt(arrInput[1]) == 4) {
+                            flagSoal = 4;
+
+                            soal4 = new TreeMap<>();
+                            soal4.put(0,"7+5+3");
+                            soal4.put(1,"9+1+4");
+                            soal4.put(2,"8+2");
+                            soal4.put(3,"6+9+0+5+1+3");
+                            soal4.put(4,"8+2+1+7+3+9+6");
+
+                            int soalNumber = (int) (Math.random() * (4 - 0));
+                            String soal = soal4.get(soalNumber);
+                            soal4Answer = soal;
+                            soalBundle = "Game Dimulai \n============\n\nNol itu satu\n"+ soal + " berapa ?";
+
                             replyToUser(targetID, soalBundle);
                             isStart = true;
                         }

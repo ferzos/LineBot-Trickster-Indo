@@ -112,6 +112,17 @@ public class LineBotController
                         e.printStackTrace();
                     }
                 } else {
+                    isStart = false;
+                    flagSoal = 0;
+                    soalBundle = "";
+                    soal1.clear();
+                    soal1Answer = "";
+                    soal2Pertama.clear();
+                    soal2Kedua.clear();
+                    soal3.clear();
+                    soal3answer = "";
+                    soal4.clear();
+                    soal4Answer = "";
                     if (payload.events[0].source.type.equals("group")){
                         leaveGR(payload.events[0].source.groupId, "group");
                     } else if (payload.events[0].source.type.equals("room")){

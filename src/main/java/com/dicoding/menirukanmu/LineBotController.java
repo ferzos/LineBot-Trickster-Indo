@@ -151,7 +151,7 @@ public class LineBotController
                         soalBundle = "";
                         soal1.clear();
                         soal1Answer = "";
-                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" +endMessage);
                     } if(message.equalsIgnoreCase(soal1Answer)) {
                         isStart = false;
                         flagSoal = 0;
@@ -169,7 +169,7 @@ public class LineBotController
                         soalBundle = "";
                         soal2Pertama.clear();
                         soal2Kedua.clear();
-                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + arrInput[2] + "\n\n" +endMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }
@@ -180,7 +180,7 @@ public class LineBotController
                         soalBundle = "";
                         soal3.clear();
                         soal3answer = "";
-                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" +endMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }

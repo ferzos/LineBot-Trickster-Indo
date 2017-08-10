@@ -205,7 +205,7 @@ public class LineBotController
         // Game belum dimulai
         else {
             // User ketik "help"
-            if(message.equalsIgnoreCase("help")) {
+            if(message.equalsIgnoreCase("trido help")) {
                 replyToUser(targetID, startMessage);
             }
             // User ketik "start <something>"

@@ -8,7 +8,6 @@ import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +26,7 @@ public class LineBotController
 {
     boolean isStart = false;
     int flagSoal = 0;
-    String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n1. Mata-Mati-Mitu\n2. Yang ketiga";
+    String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n1. Mata-Mati-Mitu\n2. Yang ketiga\n3. Tepok Nyamuk";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
 //    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
 //    ArrayList<String> soal;
@@ -38,6 +37,8 @@ public class LineBotController
     String soal1Answer = "";
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
+    ArrayList<String> soal3;
+    String soal3answer = "";
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -97,9 +98,8 @@ public class LineBotController
                         // Ini ori
                         // getMessageData(msgText, idTarget);
 
-//                        getMessageData(msgText, payload.events[0].replyToken);
+                        getMessageData(msgText, payload.events[0].replyToken);
 
-                        getMessageData(userId, payload.events[0].replyToken);
                     } catch (IOException e) {
                         System.out.println("Exception is raised ");
                         e.printStackTrace();
@@ -118,22 +118,6 @@ public class LineBotController
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
-    public void profile(
-            @PathVariable("id") String userId
-    ){
-        try {
-            Response<UserProfileResponse> response = LineMessagingServiceBuilder
-                    .create(lChannelAccessToken)
-                    .build()
-                    .getProfile(userId)
-                    .execute();
-            pushMessage(userId, response.body().toString());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     private void getMessageData(String message, String targetID) throws IOException{
         String[] arrInput = message.split(" ");
 
@@ -148,6 +132,8 @@ public class LineBotController
                 soal1Answer = "";
                 soal2Pertama.clear();
                 soal2Kedua.clear();
+                soal3.clear();
+                soal3answer = "";
                 replyToUser(targetID, endMessage);
             }
             // User minta soal
@@ -183,6 +169,17 @@ public class LineBotController
                         soal2Pertama.clear();
                         soal2Kedua.clear();
                         replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                    }
+                } else if (flagSoal == 3) {
+                    if (message.equalsIgnoreCase(soal3answer)){
+                        isStart = false;
+                        flagSoal = 0;
+                        soalBundle = "";
+                        soal3.clear();
+                        soal3answer = "";
+                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                    } else {
+                        replyToUser(targetID, "Salah !!");
                     }
                 }
             }
@@ -241,6 +238,21 @@ public class LineBotController
                             soalBundle = "Game Dimulai \n============\n\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua +"\nyang ketiga apa ?";
                             replyToUser(targetID, soalBundle);
                             isStart = true;
+                        } else if (Integer.parseInt(arrInput[1]) == 3) {
+                            flagSoal = 3;
+
+                            soal3 = new ArrayList<>();
+                            soal3.add("Berapa");
+                            soal3.add("Berapa yang mati");
+                            soal3.add("Ada berapa nyamuk yang mati");
+                            soal3.add("Hayo berapa yang mati");
+                            soal3.add("Coba itung berapa nyamuk yang mati");
+
+                            int soalNumber = (int) (Math.random() * (4 - 0));
+                            soalBundle = "Plok !! Plok !! Plok !! Plok !! Plok !! \n" + soal3.get(soalNumber) + " ?";
+                            soal3answer = soal3.get(soalNumber).split(" ").length + "";
+                            replyToUser(targetID, soalBundle);
+                            isStart = true;
                         }
                     }
                     // Number pada range yang salah
@@ -253,8 +265,6 @@ public class LineBotController
                 {
                     replyToUser(targetID, startMessage);
                 }
-            } else {
-                replyToUser(targetID, message);
             }
         }
 //        // Game udah dimulai

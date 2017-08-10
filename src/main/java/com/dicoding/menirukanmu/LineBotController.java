@@ -235,8 +235,8 @@ public class LineBotController
                             // Buat soal dan mulai permainan
                             soal1 = new TreeMap<>();
                             soal1.put(0, "Bensin");
-                            soal1.put(1, "Pagi");
-                            soal1.put(2, "Kura-kura");
+                            soal1.put(1, "Bola");
+                            soal1.put(2, "Lady Gaga");
                             soal1.put(3, "Amanah");
                             soal1.put(4, "Kacamata");
                             int soalNumber = (int) (Math.random() * (4 - 0));

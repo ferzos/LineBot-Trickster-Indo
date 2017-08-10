@@ -25,6 +25,7 @@ import java.util.*;
 public class LineBotController
 {
     boolean isStart = false;
+    int flagSoal = 0;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n1. Mata-Mati-Mitu";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
 //    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
@@ -113,27 +114,37 @@ public class LineBotController
 
         // Game dimulai
         if (isStart) {
-            // User menghentikan permainan
-            if (message.equalsIgnoreCase("end the game")) {
-                isStart = false;
-                replyToUser(targetID, endMessage);
-            }
-            // User minta soal
-            else if (message.equalsIgnoreCase("soal")) {
-                replyToUser(targetID, soalBundle);
-            }
-            // User masukin input
-            else {
-                // Input ada
-                if(message.equalsIgnoreCase("gratis") && soal1Answer.equalsIgnoreCase("0000")) {
+            if (flagSoal == 1) {
+                // User menghentikan permainan
+                if (message.equalsIgnoreCase("end the game")) {
                     isStart = false;
-                    replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
-                } if(message.equalsIgnoreCase(soal1Answer)) {
-                    isStart = false;
-                    replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
-                } else {
-                    replyToUser(targetID, "Salah !!");
+                    soal1.clear();
+                    soalBundle = "";
+                    replyToUser(targetID, endMessage);
                 }
+                // User minta soal
+                else if (message.equalsIgnoreCase("soal")) {
+                    replyToUser(targetID, soalBundle);
+                }
+                // User masukin input
+                else {
+                    // Input ada
+                    if(message.equalsIgnoreCase("gratis") && soal1Answer.equalsIgnoreCase("0000")) {
+                        isStart = false;
+                        soal1.clear();
+                        soalBundle = "";
+                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                    } if(message.equalsIgnoreCase(soal1Answer)) {
+                        isStart = false;
+                        soal1.clear();
+                        soalBundle = "";
+                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                    } else {
+                        replyToUser(targetID, "Salah !!");
+                    }
+                }
+            } else {
+
             }
         }
         // Game belum dimulai
@@ -148,20 +159,27 @@ public class LineBotController
                 if (NumberUtils.isDigits(arrInput[1])) {
                     int kodeSoal = Integer.parseInt(arrInput[1]);
                     // Numbernya pada range yang benar
-                    if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= 1) {
-                        // Buat soal dan mulai permainan
-                        soal1 = new TreeMap<>();
-                        soal1.put(0, "Bensin");
-                        soal1.put(1, "Pagi");
-                        soal1.put(2, "Kura-kura");
-                        soal1.put(3, "Amanah");
-                        soal1.put(4, "Kacamata");
-                        int soalNumber = (int) (Math.random() * (4 - 0));
-                        String soal = soal1.get(soalNumber);
-                        soal1Answer = soalNumber + "000";
-                        soalBundle = "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal + " berapa ?";
-                        replyToUser(targetID, soalBundle);
-                        isStart = true;
+                    if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= 2) {
+                        if (Integer.parseInt(arrInput[1]) == 1) {
+                            flagSoal = 1;
+                            // Buat soal dan mulai permainan
+                            soal1 = new TreeMap<>();
+                            soal1.put(0, "Bensin");
+                            soal1.put(1, "Pagi");
+                            soal1.put(2, "Kura-kura");
+                            soal1.put(3, "Amanah");
+                            soal1.put(4, "Kacamata");
+                            int soalNumber = (int) (Math.random() * (4 - 0));
+                            String soal = soal1.get(soalNumber);
+                            soal1Answer = soalNumber + "000";
+                            soalBundle = "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal + " berapa ?";
+                            replyToUser(targetID, soalBundle);
+                            isStart = true;
+                        } else if (Integer.parseInt(arrInput[1]) == 2) {
+                            flagSoal = 2;
+                            replyToUser(targetID, "Masuk soal 2");
+                            isStart = true;
+                        }
                     }
                     // Number pada range yang salah
                     else {

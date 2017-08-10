@@ -18,14 +18,16 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @RestController
 @RequestMapping(value="/linebot")
 public class LineBotController
 {
     boolean isStart = false;
-    String startMessage = "Silahkan pilih kode soal: 1-10";
-    String endMessage = "Game berakhir";
+    String startMessage = "Silahkan ketik \"start <kode soal 1-10>\" untuk memulai permainan";
+    String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
+    ArrayList<String> soal;
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -101,24 +103,71 @@ public class LineBotController
     }
 
     private void getMessageData(String message, String targetID) throws IOException{
+        String[] arrInput = message.split(" ");
+
+        // Game udah dimulai
         if (isStart) {
-            if (message.equalsIgnoreCase("end the game")) {
-                isStart = !isStart;
+            replyToUser(targetID, "Game Dimulai nih :)");
+        }
+        // Game belum dimulai
+        else {
+            // User ketik "help"
+            if(message.equalsIgnoreCase("help")) {
+                replyToUser(targetID, startMessage);
+            }
+            // User ketik "start <something>"
+            else if (arrInput[0].equalsIgnoreCase("start")) {
+                // Yang diketik number
+                if (NumberUtils.isDigits(arrInput[1])) {
+                    int kodeSoal = Integer.parseInt(arrInput[1]);
+                    // Numbernya pada range yang benar
+                    if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) < 11) {
+                        // CRUMBLES
+                        if (kodeSoal == 1) {
+                            soal = new ArrayList<>();
+                            soal.add("Luffy");
+                            soal.add("Roronoa");
+                            soal.add("Nami");
+                            soal.add("Usopp");
+                            soal.add("Sanji");
+                            replyToUser(targetID, "Game Dimulai \n ============");
+                            isStart = true;
+                        }
+                    }
+                    // Number pada range yang salah
+                    else {
+                        replyToUser(targetID, "Tidak ada soal dengan nomor itu :(");
+                    }
+                }
+                // Yang diketik bukan number
+                else
+                {
+                    replyToUser(targetID, startMessage);
+                }
+            } else if (arrInput[0].equalsIgnoreCase("end the game")) {
+                isStart = false;
+                soal.clear();
                 replyToUser(targetID, endMessage);
-            } else if (NumberUtils.isDigits(message)) {
-                replyToUser(targetID, message);
-            }
-            else {
-                replyToUser(targetID, startMessage);
-            }
-        } else {
-            if (message.equalsIgnoreCase("start")) {
-                isStart = !isStart;
-                replyToUser(targetID, startMessage);
-            } else {
-                replyToUser(targetID, "Silahkan ketik \"start\" untuk memulai permainan ");
             }
         }
+//        if (isStart) {
+//            if (message.equalsIgnoreCase("end the game")) {
+//                isStart = !isStart;
+//                replyToUser(targetID, endMessage);
+//            } else if (NumberUtils.isDigits(message)) {
+//                replyToUser(targetID, message);
+//            }
+//            else {
+//                replyToUser(targetID, startMessage);
+//            }
+//        } else {
+//            if (message.equalsIgnoreCase("start")) {
+//                isStart = !isStart;
+//                replyToUser(targetID, startMessage);
+//            } else {
+//                replyToUser(targetID, "Silahkan ketik \"start\" untuk memulai permainan ");
+//            }
+//        }
 
 //        if (message!=null){
 ////            pushMessage(targetID, message);

@@ -64,7 +64,7 @@ public class LineBotController
 
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
-                replyToUser(payload.events[0].replyToken, "Hello Group");
+                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Trido. Mari kita bermain :)");
             }
             if (payload.events[0].source.type.equals("room")){
                 replyToUser(payload.events[0].replyToken, "Hello Room");
@@ -84,7 +84,7 @@ public class LineBotController
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
 
-                if (!msgText.contains("bot leave")){
+                if (!msgText.contains("bye trido")){
                     try {
 //                      getMessageData(msgText, idTarget);
                         getMessageData(msgText, payload.events[0].replyToken);
@@ -116,10 +116,15 @@ public class LineBotController
                 isStart = false;
                 replyToUser(targetID, endMessage);
             }
+            // User minta soal
+            else if (message.equalsIgnoreCase("soal")) {
+                replyToUser(targetID, "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \nKacamata berapa ?");
+            }
             // User masukin input
             else {
                 // Input ada
                 if(message.equalsIgnoreCase("4000")) {
+                    isStart = false;
                     replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
                 } else {
                     replyToUser(targetID, "Salah !!");
@@ -140,7 +145,7 @@ public class LineBotController
                     // Numbernya pada range yang benar
                     if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= 1) {
                         // Buat soal dan mulai permainan
-                        replyToUser(targetID, "Game Dimulai \n============\n\n Mata 2000, Mati 1000, Mitu gratis. \n Kacamata berapa ?");
+                        replyToUser(targetID, "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \nKacamata berapa ?");
                         isStart = true;
                     }
                     // Number pada range yang salah

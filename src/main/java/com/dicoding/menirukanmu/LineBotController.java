@@ -8,6 +8,7 @@ import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
 import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.profile.UserProfileResponse;
 import com.linecorp.bot.model.response.BotApiResponse;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -115,6 +116,22 @@ public class LineBotController
         }
          
         return new ResponseEntity<String>(HttpStatus.OK);
+    }
+
+    @RequestMapping(value = "/profile/{id}", method = RequestMethod.GET)
+    public void profile(
+            @PathVariable("id") String userId
+    ){
+        try {
+            Response<UserProfileResponse> response = LineMessagingServiceBuilder
+                    .create(lChannelAccessToken)
+                    .build()
+                    .getProfile(userId)
+                    .execute();
+            pushMessage(userId, response.body().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void getMessageData(String message, String targetID) throws IOException{

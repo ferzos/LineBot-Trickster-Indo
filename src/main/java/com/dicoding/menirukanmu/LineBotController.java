@@ -157,8 +157,8 @@ public class LineBotController
                         flagSoal = 0;
                         soalBundle = "";
                         soal1.clear();
-                        soal1Answer = "";
                         replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" +endMessage);
+                        soal1Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }
@@ -179,8 +179,8 @@ public class LineBotController
                         flagSoal = 0;
                         soalBundle = "";
                         soal3.clear();
-                        soal3answer = "";
                         replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" +endMessage);
+                        soal3answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }

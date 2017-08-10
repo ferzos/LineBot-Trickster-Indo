@@ -122,12 +122,13 @@ public class LineBotController
             else {
                 // Input ada
                 if(soal.contains(message.toLowerCase())) {
+                    replyToUser(targetID, "ada nih, bentar gw cariin indexnya");
                     for (int i = 0 ; i < soal.size() ; i++) {
                         if(soal.get(i).equalsIgnoreCase(message)){
                             answerStatus.set(i, Boolean.TRUE);
-                            replyToUser(targetID, "ada nih" + soal.get(i));
+                            replyToUser(targetID, "indexnya ini bro: " + i+1);
                         } else {
-                            replyToUser(targetID, "ga ada nih");
+                            replyToUser(targetID, "gatau bro indexnya");
                         }
                     }
 //                    for (int i = 0 ; i < soal.size() ; i++) {

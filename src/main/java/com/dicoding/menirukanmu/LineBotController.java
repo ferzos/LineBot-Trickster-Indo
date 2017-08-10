@@ -151,14 +151,14 @@ public class LineBotController
                         soalBundle = "";
                         soal1.clear();
                         soal1Answer = "";
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah gratis \n\n " +endMessage);
                     } if(message.equalsIgnoreCase(soal1Answer)) {
                         isStart = false;
                         flagSoal = 0;
                         soalBundle = "";
                         soal1.clear();
                         soal1Answer = "";
-                        replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" +endMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }

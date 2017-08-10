@@ -27,7 +27,11 @@ public class LineBotController
     boolean isStart = false;
     int flagSoal = 0;
     int JUMLAH_SOAL = 4;
-    String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n1. Mata-Mati-Mitu\n2. Yang ketiga\n3. Tepok Nyamuk\n4. Nol itu Satu";
+    String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n" +
+            "1 --> Mata-Mati-Mitu\n" +
+            "2 --> Yang ketiga\n" +
+            "3 --> Tepok Nyamuk\n" +
+            "4 --> Nol itu Satu";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
 //    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
 //    ArrayList<String> soal;
@@ -90,7 +94,7 @@ public class LineBotController
             }
 
             if (!payload.events[0].message.type.equals("text")){
-//                replyToUser(payload.events[0].replyToken, startMessage);
+                replyToUser(payload.events[0].replyToken, "Unknown message");
             } else {
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
@@ -173,7 +177,7 @@ public class LineBotController
                         soalBundle = "";
                         soal2Pertama.clear();
                         soal2Kedua.clear();
-                        replyToUser(targetID, "Ya kamu benar, " + message + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + arrInput[2] + "\n\n" +endMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }

@@ -26,6 +26,7 @@ public class LineBotController
 {
     boolean isStart = false;
     int flagSoal = 0;
+    int JUMLAH_SOAL = 3;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n1. Mata-Mati-Mitu\n2. Yang ketiga\n3. Tepok Nyamuk";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
 //    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
@@ -169,6 +170,8 @@ public class LineBotController
                         soal2Pertama.clear();
                         soal2Kedua.clear();
                         replyToUser(targetID, "Ya kamu benar\n" + endMessage);
+                    } else {
+                        replyToUser(targetID, "Salah !!");
                     }
                 } else if (flagSoal == 3) {
                     if (message.equalsIgnoreCase(soal3answer)){
@@ -196,7 +199,7 @@ public class LineBotController
                 if (NumberUtils.isDigits(arrInput[1])) {
                     int kodeSoal = Integer.parseInt(arrInput[1]);
                     // Numbernya pada range yang benar
-                    if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= 2) {
+                    if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
                             flagSoal = 1;
                             // Buat soal dan mulai permainan

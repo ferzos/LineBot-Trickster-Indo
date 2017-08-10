@@ -177,7 +177,7 @@ public class LineBotController
                         soalBundle = "";
                         soal2Pertama.clear();
                         soal2Kedua.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + arrInput[2] + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar, " + message + "\n\n" +endMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }

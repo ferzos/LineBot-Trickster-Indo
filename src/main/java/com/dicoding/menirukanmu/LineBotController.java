@@ -18,9 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import retrofit2.Response;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.TreeMap;
+import java.util.*;
 
 @RestController
 @RequestMapping(value="/linebot")
@@ -33,7 +31,9 @@ public class LineBotController
 //    ArrayList<String> soal;
 //    ArrayList<Boolean> answerStatus;
 //    StringBuilder builder = new StringBuilder();
+    String soalBundle = "";
     TreeMap<Integer, String> soal1;
+    String soal1Answer = "";
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -111,13 +111,10 @@ public class LineBotController
     private void getMessageData(String message, String targetID) throws IOException{
         String[] arrInput = message.split(" ");
 
-        int soalNumber = 0;
-        String soal = "";
-        String soalBundle = "";
-        String answer = "tes";
-
         // Game dimulai
         if (isStart) {
+
+
             // User menghentikan permainan
             if (message.equalsIgnoreCase("end the game")) {
                 isStart = false;
@@ -125,20 +122,20 @@ public class LineBotController
             }
             // User minta soal
             else if (message.equalsIgnoreCase("soal")) {
-                replyToUser(targetID, soal);
+                replyToUser(targetID, soalBundle);
             }
             // User masukin input
             else {
                 // Input ada
-                if(message.equalsIgnoreCase("gratis") && answer.equalsIgnoreCase("0000")) {
+                if(message.equalsIgnoreCase("gratis") && soal1Answer.equalsIgnoreCase("0000")) {
                     isStart = false;
                     replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
-                } if(message.equalsIgnoreCase(answer)) {
+                } if(message.equalsIgnoreCase(soal1Answer)) {
                     isStart = false;
                     replyToUser(targetID, "Ya kamu benar :)\n" + endMessage);
                 } else {
 //                    replyToUser(targetID, "Salah !!");
-                    replyToUser(targetID, soalNumber+"");
+                    replyToUser(targetID, soal1Answer);
                 }
             }
         }
@@ -162,8 +159,9 @@ public class LineBotController
                         soal1.put(2, "Kura-kura");
                         soal1.put(3, "Amanah");
                         soal1.put(4, "Kacamata");
-                        soalNumber = (int) (Math.random() * (5 - 1)) + 1;
-                        soal = soal1.get(soalNumber);
+                        int soalNumber = (int) (Math.random() * (5 - 1)) + 1;
+                        String soal = soal1.get(soalNumber);
+                        soal1Answer = soalNumber + "000";
                         soalBundle = "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal + " berapa ?";
                         replyToUser(targetID, soalBundle);
                         isStart = true;

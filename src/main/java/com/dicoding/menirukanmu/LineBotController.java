@@ -278,7 +278,7 @@ public class LineBotController
                         } else if (Integer.parseInt(arrInput[1]) == 3) {
                             variables.put("flagSoal",3);
                             int soalNumber = (int) (Math.random() * (7 - 0));
-                            int jumlahTepokan = (int) (Math.random() * (10 - 1));
+                            int jumlahTepokan = (int) (Math.random() * (10 - 2));
                             String plok = "";
                             for (int i = 0; i < jumlahTepokan; i++) {
                                 plok += "Plok!! ";

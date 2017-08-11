@@ -159,7 +159,7 @@ public class LineBotController
                 soal4Answer = "";
                 soal5.clear();
                 soal5Answer = "";
-                replyToUser(targetID, footMessage);
+                replyToUser(targetID, "Game berakhir, Terima kasih sudah bermain :)");
             }
             // User minta soal
             else if (message.equalsIgnoreCase("soal")) {

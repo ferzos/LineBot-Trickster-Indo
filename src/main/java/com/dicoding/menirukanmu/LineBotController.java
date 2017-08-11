@@ -208,9 +208,6 @@ public class LineBotController
             else if (message.equalsIgnoreCase("soal")) {
                 replyToUser(replyToken, variables.get("soalBundle")+"");
             }
-            else if (message.equalsIgnoreCase("flag")) {
-                replyToUser(replyToken, relativeValueMap.get(targetId).get("flagSoal")+"");
-            }
             // User masukin input
             else {
                 // Input ada
@@ -337,8 +334,6 @@ public class LineBotController
                 else {
                     replyToUser(replyToken, startMessage);
                 }
-            } else {
-                replyToUser(replyToken, relativeValueMap.get(targetId).get("id")+"");
             }
         }
     }

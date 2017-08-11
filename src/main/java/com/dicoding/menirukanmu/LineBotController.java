@@ -23,6 +23,13 @@ import java.util.*;
 @RequestMapping(value="/linebot")
 public class LineBotController
 {
+    boolean isStart = false;
+    int flagSoal = 0;
+    String soalBundle = "";
+    String soal3answer = "";
+    String soal4Answer = "";
+    String soal5Answer = "";
+
     int JUMLAH_SOAL = 5;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n" +
             "1 --> Fanta dan Sprite\n" +
@@ -35,13 +42,13 @@ public class LineBotController
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end the game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
 
-    boolean isStart = false;
-    int flagSoal = 0;
-    String soalBundle = "";
-    String soal1Answer = "";
-    String soal3answer = "";
-    String soal4Answer = "";
-    String soal5Answer = "";
+//    boolean isStart = false;
+//    int flagSoal = 0;
+//    String soalBundle = "";
+//    String soal1Answer = "";
+//    String soal3answer = "";
+//    String soal4Answer = "";
+//    String soal5Answer = "";
 
     TreeMap<Integer, String> soal1;
     ArrayList<String> soal2Pertama;
@@ -161,7 +168,8 @@ public class LineBotController
             }
 
             if (!payload.events[0].message.type.equals("text")){
-                replyToUser(payload.events[0].replyToken, "Unknown message");
+                // DO NOTHING
+                // replyToUser(payload.events[0].replyToken, "Unknown message");
             } else {
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
@@ -178,19 +186,7 @@ public class LineBotController
                         e.printStackTrace();
                     }
                 } else {
-                    isStart = false;
-                    flagSoal = 0;
-                    soalBundle = "";
-                    soal1.clear();
-                    soal1Answer = "";
-                    soal2Pertama.clear();
-                    soal2Kedua.clear();
-                    soal3.clear();
-                    soal3answer = "";
-                    soal4.clear();
-                    soal4Answer = "";
-                    soal5.clear();
-                    soal5Answer = "";
+                    resetState(relativeValueMap.get(idTarget));
                     if (payload.events[0].source.type.equals("group")){
                         leaveGR(payload.events[0].source.groupId, "group");
                     } else if (payload.events[0].source.type.equals("room")){
@@ -206,29 +202,18 @@ public class LineBotController
 
     private void getMessageData(String message, String replyToken, String targetId) throws IOException {
         String[] arrInput = message.split(" ");
+        HashMap<String, Object> variables = relativeValueMap.get(targetId);
 
         // Game dimulai
-        if (isStart) {
+        if ((boolean)variables.get("start")) {
             // User menghentikan permainan
             if (message.equalsIgnoreCase("end game")) {
-                isStart = false;
-                flagSoal = 0;
-                soalBundle = "";
-                soal1.clear();
-                soal1Answer = "";
-                soal2Pertama.clear();
-                soal2Kedua.clear();
-                soal3.clear();
-                soal3answer = "";
-                soal4.clear();
-                soal4Answer = "";
-                soal5.clear();
-                soal5Answer = "";
+                resetState(relativeValueMap.get(targetId));
                 replyToUser(replyToken, "Game berakhir, Terima kasih sudah bermain :)");
             }
             // User minta soal
             else if (message.equalsIgnoreCase("soal")) {
-                replyToUser(replyToken, soalBundle);
+                replyToUser(replyToken, variables.get("soalBundle")+"");
             }
             else if (message.equalsIgnoreCase("flag")) {
                 replyToUser(replyToken, relativeValueMap.get(targetId).get("flagSoal")+"");
@@ -236,13 +221,10 @@ public class LineBotController
             // User masukin input
             else {
                 // Input ada
-                if (flagSoal == 1) {
+                if ((int)variables.get("flagSoal") == 1) {
+                    String soal1Answer = variables.get("soal1Answer")+"";
                     if (message.equalsIgnoreCase("gratis") && soal1Answer.equalsIgnoreCase("0000")) {
-                        isStart = false;
-                        flagSoal = 0;
-                        soalBundle = "";
-                        soal1.clear();
-                        soal1Answer = "";
+                        resetState(relativeValueMap.get(targetId));
                         replyToUser(replyToken, "Ya kamu benar\nJawabannya adalah gratis\n\n" + footMessage);
                     }
                     if (message.equalsIgnoreCase(soal1Answer)) {
@@ -316,13 +298,15 @@ public class LineBotController
                     // Numbernya pada range yang benar
                     if (kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
-                            flagSoal = 1;
+                            variables.put("flagSoal",1);
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal1.get(soalNumber);
-                            soal1Answer = soalNumber + "000";
-                            soalBundle = headerMessage + "Fanta 2000, kalo Sprite gratis. \n" + soal + " berapa ?\n\n" + endMessage;
+                            String soal1Answer = soalNumber + "000";
+                            variables.put("soal1Answer", soal1Answer);
+                            String soalBundle = headerMessage + "Fanta 2000, kalo Sprite gratis. \n" + soal + " berapa ?\n\n" + endMessage;
+                            variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
-                            isStart = true;
+                            variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 2) {
                             flagSoal = 2;
                             int soalNumber = (int) (Math.random() * (4 - 0));
@@ -357,7 +341,6 @@ public class LineBotController
                             String soal = soal5.get(soalNumber);
                             soal5Answer = soalNumber+"";
                             soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?\n\n" + endMessage;
-
                             replyToUser(replyToken, soalBundle);
                             isStart = true;
                         }
@@ -445,6 +428,16 @@ public class LineBotController
         initValue.put("soal5Answer", "");
 
         return initValue;
+    }
+
+    private void resetState (HashMap<String, Object> variables) {
+        variables.put("start", false);
+        variables.put("flagSoal", 0);
+        variables.put("soalBundle", "");
+        variables.put("soal1Answer", "");
+        variables.put("soal3Answer", "");
+        variables.put("soal4Answer", "");
+        variables.put("soal5Answer", "");
     }
 
 }

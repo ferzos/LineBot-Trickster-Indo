@@ -6,7 +6,6 @@ import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.client.LineSignatureValidator;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
-import com.linecorp.bot.model.message.StickerMessage;
 import com.linecorp.bot.model.message.TextMessage;
 import com.linecorp.bot.model.response.BotApiResponse;
 import org.apache.commons.lang3.math.NumberUtils;
@@ -28,7 +27,7 @@ public class LineBotController
     int flagSoal = 0;
     int JUMLAH_SOAL = 4;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n" +
-            "1 --> Mata-Mati-Mitu\n" +
+            "1 --> Fanta dan Sprite\n" +
             "2 --> Yang ketiga\n" +
             "3 --> Tepok Nyamuk\n" +
             "4 --> Nol itu Satu";
@@ -136,7 +135,7 @@ public class LineBotController
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
-    private void getMessageData(String message, String targetID) throws IOException{
+    private void getMessageData(String message, String targetID) throws IOException {
         String[] arrInput = message.split(" ");
 
         // Game dimulai
@@ -164,19 +163,20 @@ public class LineBotController
             else {
                 // Input ada
                 if (flagSoal == 1) {
-                    if(message.equalsIgnoreCase("gratis") && soal1Answer.equalsIgnoreCase("0000")) {
+                    if (message.equalsIgnoreCase("gratis") && soal1Answer.equalsIgnoreCase("0000")) {
                         isStart = false;
                         flagSoal = 0;
                         soalBundle = "";
                         soal1.clear();
                         soal1Answer = "";
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah gratis\n\n" +endMessage);
-                    } if(message.equalsIgnoreCase(soal1Answer)) {
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah gratis\n\n" + endMessage);
+                    }
+                    if (message.equalsIgnoreCase(soal1Answer)) {
                         isStart = false;
                         flagSoal = 0;
                         soalBundle = "";
                         soal1.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" + endMessage);
                         soal1Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
@@ -188,28 +188,28 @@ public class LineBotController
                         soalBundle = "";
                         soal2Pertama.clear();
                         soal2Kedua.clear();
-                        replyToUser(targetID, "Ya kamu benar, " + message + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar, " + message + "\n\n" + endMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }
                 } else if (flagSoal == 3) {
-                    if (message.equalsIgnoreCase(soal3answer)){
+                    if (message.equalsIgnoreCase(soal3answer)) {
                         isStart = false;
                         flagSoal = 0;
                         soalBundle = "";
                         soal3.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" + endMessage);
                         soal3answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }
                 } else if (flagSoal == 4) {
-                    if(message.equalsIgnoreCase(soal4Answer)) {
+                    if (message.equalsIgnoreCase(soal4Answer)) {
                         isStart = false;
                         flagSoal = 0;
                         soalBundle = "";
                         soal4.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal4Answer + "\n\n" +endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal4Answer + "\n\n" + endMessage);
                         soal4Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
@@ -220,7 +220,7 @@ public class LineBotController
         // Game belum dimulai
         else {
             // User ketik "help"
-            if(message.equalsIgnoreCase("trido help")) {
+            if (message.equalsIgnoreCase("trido help")) {
                 replyToUser(targetID, startMessage);
             }
             // User ketik "start <something>"
@@ -229,20 +229,20 @@ public class LineBotController
                 if (NumberUtils.isDigits(arrInput[1])) {
                     int kodeSoal = Integer.parseInt(arrInput[1]);
                     // Numbernya pada range yang benar
-                    if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
+                    if (kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
                             flagSoal = 1;
                             // Buat soal dan mulai permainan
                             soal1 = new TreeMap<>();
-                            soal1.put(0, "Bensin");
-                            soal1.put(1, "Bola");
-                            soal1.put(2, "Lady Gaga");
-                            soal1.put(3, "Amanah");
-                            soal1.put(4, "Kacamata");
+                            soal1.put(0, "Pepsi");
+                            soal1.put(1, "Root beer A&W");
+                            soal1.put(2, "Coca-cola");
+                            soal1.put(3, "Coklat Panas");
+                            soal1.put(4, "Jus mangga + Jus alpukat ");
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal1.get(soalNumber);
                             soal1Answer = soalNumber + "000";
-                            soalBundle = "Game Dimulai \n============\n\nMata 2000, Mati 1000, Mitu gratis. \n"+ soal + " berapa ?";
+                            soalBundle = "Game Dimulai \n============\n\nFanta 2000, kalo Sprite gratis. \n" + soal + " berapa ?";
                             replyToUser(targetID, soalBundle);
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 2) {
@@ -268,7 +268,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
-                            soalBundle = "Game Dimulai \n============\n\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua +"\nyang ketiga apa ?";
+                            soalBundle = "Game Dimulai \n============\n\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?";
                             replyToUser(targetID, soalBundle);
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 3) {
@@ -279,10 +279,18 @@ public class LineBotController
                             soal3.add("Berapa yang mati");
                             soal3.add("Ada berapa nyamuk yang mati");
                             soal3.add("Hayo berapa yang mati");
+                            soal3.add("Berapa nyamuk yang mati");
+                            soal3.add("Nyamuknya berapa yang mati");
                             soal3.add("Coba itung berapa nyamuk yang mati");
+                            soal3.add("Coba tebak ada berapa nyamuk yang mati");
 
-                            int soalNumber = (int) (Math.random() * (4 - 0));
-                            soalBundle = "Game Dimulai \n============\n\nPlok !! Plok !! Plok !! Plok !! Plok !! \n" + soal3.get(soalNumber) + " ?";
+                            int soalNumber = (int) (Math.random() * (7 - 0));
+                            int jumlahTepokan = (int) (Math.random() * 10);
+                            String plok = "";
+                            for (int i = 0; i < jumlahTepokan; i++) {
+                                plok += "Plok!! ";
+                            }
+                            soalBundle = "Game Dimulai \n============\n\n" + plok + "\n" + soal3.get(soalNumber) + " ?";
                             soal3answer = soal3.get(soalNumber).split(" ").length + "";
                             replyToUser(targetID, soalBundle);
                             isStart = true;
@@ -290,16 +298,16 @@ public class LineBotController
                             flagSoal = 4;
 
                             soal4 = new TreeMap<>();
-                            soal4.put(0,"7+5+3");
-                            soal4.put(1,"9+1+4");
-                            soal4.put(2,"8+2");
-                            soal4.put(3,"6+9+0+4+1+3");
-                            soal4.put(4,"8+2+1+7+3+9+6+4");
+                            soal4.put(0, "7+5+3");
+                            soal4.put(1, "9+1+4");
+                            soal4.put(2, "8+2");
+                            soal4.put(3, "6+9+0+4+1+3");
+                            soal4.put(4, "8+2+1+7+3+9+6+4");
 
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal4.get(soalNumber);
-                            soal4Answer = soalNumber+"";
-                            soalBundle = "Game Dimulai \n============\n\nNol itu satu\n"+ soal + " berapa ?";
+                            soal4Answer = soalNumber + "";
+                            soalBundle = "Game Dimulai \n============\n\nNol itu satu\n" + soal + " berapa ?";
 
                             replyToUser(targetID, soalBundle);
                             isStart = true;
@@ -311,107 +319,11 @@ public class LineBotController
                     }
                 }
                 // Yang diketik bukan number
-                else
-                {
+                else {
                     replyToUser(targetID, startMessage);
                 }
             }
         }
-//        // Game udah dimulai
-//        if (isStart) {
-//            // User menghentikan permainan
-//            if (message.equalsIgnoreCase("end the game")) {
-//                isStart = false;
-//                soal.clear();
-//                answerStatus.clear();
-//                replyToUser(targetID, endMessage);
-//            }
-//            // User masukin input
-//            else {
-//                // Input ada
-//                if(soal.contains(message.toLowerCase())) {
-//                    replyToUser(targetID, "ada nih, bentar gw cariin indexnya");
-//                    for (int i = 0 ; i < soal.size() ; i++) {
-//                        if(soal.get(i).equalsIgnoreCase(message)){
-//                            answerStatus.set(i, Boolean.TRUE);
-//                            replyToUser(targetID, "indexnya ini bro: " + i+1);
-//                        } else {
-//                            replyToUser(targetID, "gatau bro indexnya");
-//                        }
-//                    }
-////                    for (int i = 0 ; i < soal.size() ; i++) {
-////                        if(answerStatus.get(i)){
-////                            builder.append(i+1 + ". " + soal.get(i));
-////                        } else {
-////                            builder.append(i+1 + ". ");
-////                        }
-////                    }
-////                    replyToUser(targetID, builder.toString());
-//                }
-//            }
-//        }
-//        // Game belum dimulai
-//        else {
-//            // User ketik "help"
-//            if(message.equalsIgnoreCase("help")) {
-//                replyToUser(targetID, startMessage);
-//            }
-//            // User ketik "start <something>"
-//            else if (arrInput[0].equalsIgnoreCase("start")) {
-//                // Yang diketik number
-//                if (NumberUtils.isDigits(arrInput[1])) {
-//                    int kodeSoal = Integer.parseInt(arrInput[1]);
-//                    // Numbernya pada range yang benar
-//                    if ( kodeSoal > 0 && Integer.parseInt(arrInput[1]) < 11) {
-//                        // Buat soal dan mulai permainan
-//                        if (kodeSoal == 1) {
-//                            soal = new ArrayList<>();
-//                            soal.add("luffy");
-//                            soal.add("roronoa");
-//                            soal.add("usopp");
-//                            soal.add("sanji");
-//                            soal.add("robin");
-//                            answerStatus = new ArrayList<>(soal.size());
-//                            Collections.fill(answerStatus, Boolean.FALSE);
-//                            replyToUser(targetID, "Game Dimulai \n============\n\n" + soal1Message);
-//                            isStart = true;
-//                        }
-//                    }
-//                    // Number pada range yang salah
-//                    else {
-//                        replyToUser(targetID, "Tidak ada soal dengan nomor itu :(");
-//                    }
-//                }
-//                // Yang diketik bukan number
-//                else
-//                {
-//                    replyToUser(targetID, startMessage);
-//                }
-//            }
-//        }
-//        if (isStart) {
-//            if (message.equalsIgnoreCase("end the game")) {
-//                isStart = !isStart;
-//                replyToUser(targetID, endMessage);
-//            } else if (NumberUtils.isDigits(message)) {
-//                replyToUser(targetID, message);
-//            }
-//            else {
-//                replyToUser(targetID, startMessage);
-//            }
-//        } else {
-//            if (message.equalsIgnoreCase("start")) {
-//                isStart = !isStart;
-//                replyToUser(targetID, startMessage);
-//            } else {
-//                replyToUser(targetID, "Silahkan ketik \"start\" untuk memulai permainan ");
-//            }
-//        }
-
-//        if (message!=null){
-////            pushMessage(targetID, message);
-//            replyToUser(targetID, message);
-//        }
     }
 
     private void replyToUser(String rToken, String messageToUser){

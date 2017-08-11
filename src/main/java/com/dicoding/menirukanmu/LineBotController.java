@@ -38,16 +38,29 @@ public class LineBotController
     boolean isStart = false;
     int flagSoal = 0;
     String soalBundle = "";
-    TreeMap<Integer, String> soal1;
     String soal1Answer = "";
+    String soal3answer = "";
+    String soal4Answer = "";
+    String soal5Answer = "";
+
+    TreeMap<Integer, String> soal1;
+
+    public LineBotController() {
+        soal1 = new TreeMap<>();
+        soal1 = new TreeMap<>();
+        soal1.put(0, "Pepsi");
+        soal1.put(1, "Root beer A&W");
+        soal1.put(2, "Coca-cola");
+        soal1.put(3, "Coklat Panas");
+        soal1.put(4, "Jus mangga + Jus alpukat ");
+    }
+
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
     ArrayList<String> soal3;
-    String soal3answer = "";
     TreeMap<Integer, String> soal4;
-    String soal4Answer = "";
     TreeMap<Integer, String> soal5;
-    String soal5Answer = "";
+
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -260,15 +273,7 @@ public class LineBotController
                     // Numbernya pada range yang benar
                     if (kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
-//                            flagSoal = 1;
-                            relativeValueMap.get(targetId).put("flagSoal",1);
-                            // Buat soal dan mulai permainan
-                            soal1 = new TreeMap<>();
-                            soal1.put(0, "Pepsi");
-                            soal1.put(1, "Root beer A&W");
-                            soal1.put(2, "Coca-cola");
-                            soal1.put(3, "Coklat Panas");
-                            soal1.put(4, "Jus mangga + Jus alpukat ");
+                            flagSoal = 1;
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal1.get(soalNumber);
                             soal1Answer = soalNumber + "000";
@@ -448,4 +453,5 @@ public class LineBotController
 
         return initValue;
     }
+
 }

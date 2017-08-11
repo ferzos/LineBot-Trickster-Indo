@@ -28,9 +28,11 @@ public class LineBotController
             "1 --> Fanta dan Sprite\n" +
             "2 --> Yang ketiga\n" +
             "3 --> Tepok Nyamuk\n" +
-            "4 --> Nol itu Satu" +
+            "4 --> Nol itu Satu\n" +
             "5 --> Lantai Hotel";
-    String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
+    String headerMessage = "============\nGame Dimulai \n============\n\n";
+    String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
+    String endMessage = "Ketik \"end the game\" untuk mengakhiri permainan";
 
     boolean isStart = false;
     int flagSoal = 0;
@@ -157,7 +159,7 @@ public class LineBotController
                 soal4Answer = "";
                 soal5.clear();
                 soal5Answer = "";
-                replyToUser(targetID, endMessage);
+                replyToUser(targetID, footMessage);
             }
             // User minta soal
             else if (message.equalsIgnoreCase("soal")) {
@@ -173,14 +175,14 @@ public class LineBotController
                         soalBundle = "";
                         soal1.clear();
                         soal1Answer = "";
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah gratis\n\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah gratis\n\n" + footMessage);
                     }
                     if (message.equalsIgnoreCase(soal1Answer)) {
                         isStart = false;
                         flagSoal = 0;
                         soalBundle = "";
                         soal1.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" + footMessage);
                         soal1Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
@@ -192,7 +194,7 @@ public class LineBotController
                         soalBundle = "";
                         soal2Pertama.clear();
                         soal2Kedua.clear();
-                        replyToUser(targetID, "Ya kamu benar, " + message + "\n\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar, " + message + "\n\n" + footMessage);
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }
@@ -202,7 +204,7 @@ public class LineBotController
                         flagSoal = 0;
                         soalBundle = "";
                         soal3.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" + footMessage);
                         soal3answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
@@ -213,7 +215,7 @@ public class LineBotController
                         flagSoal = 0;
                         soalBundle = "";
                         soal4.clear();
-                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal4Answer + "\n\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal4Answer + "\n\n" + footMessage);
                         soal4Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
@@ -224,7 +226,7 @@ public class LineBotController
                         flagSoal = 0;
                         soalBundle = "";
                         soal5.clear();
-                        replyToUser(targetID, "Ya kamu benar\nKamu berada di lantai " + soal5Answer + "\n\n" + endMessage);
+                        replyToUser(targetID, "Ya kamu benar\nKamu berada di lantai " + soal5Answer + "\n\n" + footMessage);
                         soal5Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
@@ -257,7 +259,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal1.get(soalNumber);
                             soal1Answer = soalNumber + "000";
-                            soalBundle = "Game Dimulai \n============\n\nFanta 2000, kalo Sprite gratis. \n" + soal + " berapa ?";
+                            soalBundle = headerMessage + "Fanta 2000, kalo Sprite gratis. \n" + soal + " berapa ?\n\n" + endMessage;
                             replyToUser(targetID, soalBundle);
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 2) {
@@ -283,7 +285,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
-                            soalBundle = "Game Dimulai \n============\n\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?";
+                            soalBundle = headerMessage + "Yang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n" + endMessage;
                             replyToUser(targetID, soalBundle);
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 3) {
@@ -305,7 +307,7 @@ public class LineBotController
                             for (int i = 0; i < jumlahTepokan; i++) {
                                 plok += "Plok!! ";
                             }
-                            soalBundle = "Game Dimulai \n============\n\n" + plok + "\n" + soal3.get(soalNumber) + " ?";
+                            soalBundle = headerMessage + plok + "\n" + soal3.get(soalNumber) + " ?\n" + endMessage;
                             soal3answer = soal3.get(soalNumber).split(" ").length + "";
                             replyToUser(targetID, soalBundle);
                             isStart = true;
@@ -322,7 +324,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal4.get(soalNumber);
                             soal4Answer = soalNumber + "";
-                            soalBundle = "Game Dimulai \n============\n\nNol itu satu\n" + soal + " berapa ?";
+                            soalBundle = headerMessage + "Nol itu satu\n" + soal + " berapa ?\n" + endMessage;
 
                             replyToUser(targetID, soalBundle);
                             isStart = true;
@@ -343,7 +345,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (9 - 1));
                             String soal = soal5.get(soalNumber);
                             soal5Answer = soalNumber+"";
-                            soalBundle = "Game Dimulai \n============\n\nKamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?";
+                            soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?\n" + endMessage;
 
                             replyToUser(targetID, soalBundle);
                             isStart = true;

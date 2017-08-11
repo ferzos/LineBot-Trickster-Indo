@@ -44,23 +44,66 @@ public class LineBotController
     String soal5Answer = "";
 
     TreeMap<Integer, String> soal1;
-
-    public LineBotController() {
-        soal1 = new TreeMap<>();
-        soal1 = new TreeMap<>();
-        soal1.put(0, "Pepsi");
-        soal1.put(1, "Root beer A&W");
-        soal1.put(2, "Coca-cola");
-        soal1.put(3, "Coklat Panas");
-        soal1.put(4, "Jus mangga + Jus alpukat ");
-    }
-
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
     ArrayList<String> soal3;
     TreeMap<Integer, String> soal4;
     TreeMap<Integer, String> soal5;
 
+    public LineBotController() {
+        /*SOAL 1*/
+        soal1 = new TreeMap<>();
+        soal1.put(0, "Pepsi");
+        soal1.put(1, "Root beer A&W");
+        soal1.put(2, "Coca-cola");
+        soal1.put(3, "Coklat Panas");
+        soal1.put(4, "Jus mangga + Jus alpukat ");
+
+        /*SOAL 2*/
+        soal2Pertama = new ArrayList<>();
+        soal2Kedua = new ArrayList<>();
+        soal2Pertama.add("Emas");
+        soal2Kedua.add("Perak");
+        soal2Pertama.add("Mobil");
+        soal2Kedua.add("Motor");
+        soal2Pertama.add("Baju");
+        soal2Kedua.add("Celana");
+        soal2Pertama.add("Tikus");
+        soal2Kedua.add("Kerbau");
+        soal2Pertama.add("Langit");
+        soal2Kedua.add("Laut");
+
+        /*SOAL 3*/
+        soal3 = new ArrayList<>();
+        soal3.add("Berapa");
+        soal3.add("Berapa yang mati");
+        soal3.add("Ada berapa nyamuk yang mati");
+        soal3.add("Hayo berapa yang mati");
+        soal3.add("Berapa nyamuk yang mati");
+        soal3.add("Nyamuknya berapa yang mati");
+        soal3.add("Coba itung berapa nyamuk yang mati");
+        soal3.add("Coba tebak ada berapa nyamuk yang mati");
+
+        /*SOAL 4*/
+        soal4 = new TreeMap<>();
+        soal4.put(0, "7+5+3");
+        soal4.put(1, "9+1+4");
+        soal4.put(2, "8+2");
+        soal4.put(3, "6+9+0+4+1+3");
+        soal4.put(4, "8+2+1+7+3+9+6+4");
+
+        /*SOAL 5*/
+        soal5 = new TreeMap<>();
+        soal5.put(1, "Kamu berada di lantai 2, belok kiri");
+        soal5.put(2, "Kamu berada di lantai 3, belok kiri");
+        soal5.put(3, "Kamu berada di lantai 9, naik dua lantai");
+        soal5.put(4, "Kamu berada di lantai 4, turun satu lantai, belok kanan, naik satu lantai, belok kiri");
+        soal5.put(5, "Kamu berada di lantai 7, belok kanan, naik satu lantai");
+        soal5.put(6, "Kamu berada di lantai 8, naik satu lantai, belok kanan");
+        soal5.put(7, "Kamu berada di lantai 6, turun satu lantai, belok kiri dua kali");
+        soal5.put(8, "Kamu berada di lantai 1, turun dua lantai, belok kanan");
+        soal5.put(9, "Kamu berada di lantai 5, belok kanan, turun satu lantai");
+    }
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -282,24 +325,6 @@ public class LineBotController
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 2) {
                             flagSoal = 2;
-                            soal2Pertama = new ArrayList<>();
-                            soal2Kedua = new ArrayList<>();
-
-                            soal2Pertama.add("Emas");
-                            soal2Kedua.add("Perak");
-
-                            soal2Pertama.add("Mobil");
-                            soal2Kedua.add("Motor");
-
-                            soal2Pertama.add("Baju");
-                            soal2Kedua.add("Celana");
-
-                            soal2Pertama.add("Tikus");
-                            soal2Kedua.add("Kerbau");
-
-                            soal2Pertama.add("Langit");
-                            soal2Kedua.add("Laut");
-
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
@@ -308,17 +333,6 @@ public class LineBotController
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 3) {
                             flagSoal = 3;
-
-                            soal3 = new ArrayList<>();
-                            soal3.add("Berapa");
-                            soal3.add("Berapa yang mati");
-                            soal3.add("Ada berapa nyamuk yang mati");
-                            soal3.add("Hayo berapa yang mati");
-                            soal3.add("Berapa nyamuk yang mati");
-                            soal3.add("Nyamuknya berapa yang mati");
-                            soal3.add("Coba itung berapa nyamuk yang mati");
-                            soal3.add("Coba tebak ada berapa nyamuk yang mati");
-
                             int soalNumber = (int) (Math.random() * (7 - 0));
                             int jumlahTepokan = (int) (Math.random() * 10);
                             String plok = "";
@@ -331,35 +345,14 @@ public class LineBotController
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 4) {
                             flagSoal = 4;
-
-                            soal4 = new TreeMap<>();
-                            soal4.put(0, "7+5+3");
-                            soal4.put(1, "9+1+4");
-                            soal4.put(2, "8+2");
-                            soal4.put(3, "6+9+0+4+1+3");
-                            soal4.put(4, "8+2+1+7+3+9+6+4");
-
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal4.get(soalNumber);
                             soal4Answer = soalNumber + "";
                             soalBundle = headerMessage + "Nol itu satu\n" + soal + " berapa ?\n\n" + endMessage;
-
                             replyToUser(replyToken, soalBundle);
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 5) {
                             flagSoal = 5;
-
-                            soal5 = new TreeMap<>();
-                            soal5.put(1, "Kamu berada di lantai 2, belok kiri");
-                            soal5.put(2, "Kamu berada di lantai 3, belok kiri");
-                            soal5.put(3, "Kamu berada di lantai 9, naik dua lantai");
-                            soal5.put(4, "Kamu berada di lantai 4, turun satu lantai, belok kanan, naik satu lantai, belok kiri");
-                            soal5.put(5, "Kamu berada di lantai 7, belok kanan, naik satu lantai");
-                            soal5.put(6, "Kamu berada di lantai 8, naik satu lantai, belok kanan");
-                            soal5.put(7, "Kamu berada di lantai 6, turun satu lantai, belok kiri dua kali");
-                            soal5.put(8, "Kamu berada di lantai 1, turun dua lantai, belok kanan");
-                            soal5.put(9, "Kamu berada di lantai 5, belok kanan, turun satu lantai");
-
                             int soalNumber = (int) (Math.random() * (9 - 1));
                             String soal = soal5.get(soalNumber);
                             soal5Answer = soalNumber+"";

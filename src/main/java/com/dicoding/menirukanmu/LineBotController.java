@@ -260,7 +260,8 @@ public class LineBotController
                     // Numbernya pada range yang benar
                     if (kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
-                            flagSoal = 1;
+//                            flagSoal = 1;
+                            relativeValueMap.get(targetId).put("flagSoal",1);
                             // Buat soal dan mulai permainan
                             soal1 = new TreeMap<>();
                             soal1.put(0, "Pepsi");

@@ -35,14 +35,6 @@ public class LineBotController
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
 
-//    boolean isStart = false;
-//    int flagSoal = 0;
-//    String soalBundle = "";
-//    String soal1Answer = "";
-//    String soal3answer = "";
-//    String soal4Answer = "";
-//    String soal5Answer = "";
-
     TreeMap<Integer, String> soal1;
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
@@ -62,16 +54,11 @@ public class LineBotController
         /*SOAL 2*/
         soal2Pertama = new ArrayList<>();
         soal2Kedua = new ArrayList<>();
-        soal2Pertama.add("Emas");
-        soal2Kedua.add("Perak");
-        soal2Pertama.add("Mobil");
-        soal2Kedua.add("Motor");
-        soal2Pertama.add("Baju");
-        soal2Kedua.add("Celana");
-        soal2Pertama.add("Tikus");
-        soal2Kedua.add("Kerbau");
-        soal2Pertama.add("Langit");
-        soal2Kedua.add("Laut");
+        soal2Pertama.add("Emas");soal2Kedua.add("Perak");
+        soal2Pertama.add("Mobil");soal2Kedua.add("Motor");
+        soal2Pertama.add("Baju");soal2Kedua.add("Celana");
+        soal2Pertama.add("Tikus");soal2Kedua.add("Kerbau");
+        soal2Pertama.add("Langit");soal2Kedua.add("Laut");
 
         /*SOAL 3*/
         soal3 = new ArrayList<>();
@@ -133,7 +120,6 @@ public class LineBotController
         String msgText = " ";
         String idTarget = " ";
         String eventType = payload.events[0].type;
-        String userId = "";
 
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
@@ -319,7 +305,7 @@ public class LineBotController
                             String soal = soal5.get(soalNumber);
                             String soal5Answer = soalNumber+"";
                             variables.put("soal5Answer", soal5Answer);
-                            String soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?\n\n" + endMessage;
+                            String soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " di lantai berapa kamu sekarang ? (Jawab hanya dengan menggunakan angka)\n\n" + endMessage;
                             variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
                             variables.put("start", true);

@@ -23,13 +23,6 @@ import java.util.*;
 @RequestMapping(value="/linebot")
 public class LineBotController
 {
-    boolean isStart = false;
-    int flagSoal = 0;
-    String soalBundle = "";
-    String soal3answer = "";
-    String soal4Answer = "";
-    String soal5Answer = "";
-
     int JUMLAH_SOAL = 5;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n" +
             "1 --> Fanta dan Sprite\n" +
@@ -39,7 +32,7 @@ public class LineBotController
             "5 --> Lantai Hotel";
     String headerMessage = "============\nGame Dimulai \n============\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
-    String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end the game\" untuk mengakhiri permainan";
+    String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
 
 //    boolean isStart = false;
@@ -228,56 +221,39 @@ public class LineBotController
                         replyToUser(replyToken, "Ya kamu benar\nJawabannya adalah gratis\n\n" + footMessage);
                     }
                     if (message.equalsIgnoreCase(soal1Answer)) {
-                        isStart = false;
-                        flagSoal = 0;
-                        soalBundle = "";
-                        soal1.clear();
+                        resetState(relativeValueMap.get(targetId));
                         replyToUser(replyToken, "Ya kamu benar\nJawabannya adalah " + soal1Answer + "\n\n" + footMessage);
-                        soal1Answer = "";
                     } else {
                         replyToUser(replyToken, "Salah !!");
                     }
-                } else if (flagSoal == 2) {
+                } else if ((int)variables.get("flagSoal") == 2) {
                     if (arrInput[0].equalsIgnoreCase("yang") && arrInput[1].equalsIgnoreCase("ketiga") && arrInput[2] != null) {
-                        isStart = false;
-                        flagSoal = 0;
-                        soalBundle = "";
-                        soal2Pertama.clear();
-                        soal2Kedua.clear();
+                        resetState(relativeValueMap.get(targetId));
                         replyToUser(replyToken, "Ya kamu benar, " + message + "\n\n" + footMessage);
                     } else {
                         replyToUser(replyToken, "Salah !!");
                     }
-                } else if (flagSoal == 3) {
-                    if (message.equalsIgnoreCase(soal3answer)) {
-                        isStart = false;
-                        flagSoal = 0;
-                        soalBundle = "";
-                        soal3.clear();
-                        replyToUser(replyToken, "Ya kamu benar\nJawabannya adalah " + soal3answer + "\n\n" + footMessage);
-                        soal3answer = "";
+                } else if ((int)variables.get("flagSoal") == 3) {
+                    String soal3Answer = variables.get("soal3Answer")+"";
+                    if (message.equalsIgnoreCase(soal3Answer)) {
+                        resetState(relativeValueMap.get(targetId));
+                        replyToUser(replyToken, "Ya kamu benar\nJawabannya adalah " + soal3Answer + "\n\n" + footMessage);
                     } else {
                         replyToUser(replyToken, "Salah !!");
                     }
-                } else if (flagSoal == 4) {
+                } else if ((int)variables.get("flagSoal") == 4) {
+                    String soal4Answer = variables.get("soal4Answer")+"";
                     if (message.equalsIgnoreCase(soal4Answer)) {
-                        isStart = false;
-                        flagSoal = 0;
-                        soalBundle = "";
-                        soal4.clear();
+                        resetState(relativeValueMap.get(targetId));
                         replyToUser(replyToken, "Ya kamu benar\nJawabannya adalah " + soal4Answer + "\n\n" + footMessage);
-                        soal4Answer = "";
                     } else {
                         replyToUser(replyToken, "Salah !!");
                     }
-                } else if (flagSoal == 5) {
+                } else if ((int)variables.get("flagSoal") == 5) {
+                    String soal5Answer = variables.get("soal5Answer")+"";
                     if (message.equalsIgnoreCase(soal5Answer)) {
-                        isStart = false;
-                        flagSoal = 0;
-                        soalBundle = "";
-                        soal5.clear();
+                        resetState(relativeValueMap.get(targetId));
                         replyToUser(replyToken, "Ya kamu benar\nKamu berada di lantai " + soal5Answer + "\n\n" + footMessage);
-                        soal5Answer = "";
                     } else {
                         replyToUser(replyToken, "Salah !!");
                     }
@@ -308,41 +284,48 @@ public class LineBotController
                             replyToUser(replyToken, soalBundle);
                             variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 2) {
-                            flagSoal = 2;
+                            variables.put("flagSoal",2);
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
-                            soalBundle = headerMessage + "Yang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
+                            String soalBundle = headerMessage + "Yang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
+                            variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
-                            isStart = true;
+                            variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 3) {
-                            flagSoal = 3;
+                            variables.put("flagSoal",3);
                             int soalNumber = (int) (Math.random() * (7 - 0));
                             int jumlahTepokan = (int) (Math.random() * 10);
                             String plok = "";
                             for (int i = 0; i < jumlahTepokan; i++) {
                                 plok += "Plok!! ";
                             }
-                            soalBundle = headerMessage + plok + "\n" + soal3.get(soalNumber) + " ?\n\n" + endMessage;
-                            soal3answer = soal3.get(soalNumber).split(" ").length + "";
+                            String soalBundle = headerMessage + plok + "\n" + soal3.get(soalNumber) + " ?\n\n" + endMessage;
+                            variables.put("soalBundle", soalBundle);
+                            String soal3Answer = soal3.get(soalNumber).split(" ").length + "";
+                            variables.put("soal3Answer", soal3Answer);
                             replyToUser(replyToken, soalBundle);
-                            isStart = true;
+                            variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 4) {
-                            flagSoal = 4;
+                            variables.put("flagSoal",4);
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal4.get(soalNumber);
-                            soal4Answer = soalNumber + "";
-                            soalBundle = headerMessage + "Nol itu satu\n" + soal + " berapa ?\n\n" + endMessage;
+                            String soal4Answer = soalNumber + "";
+                            variables.put("soal4Answer", soal4Answer);
+                            String soalBundle = headerMessage + "Nol itu satu\n" + soal + " berapa ?\n\n" + endMessage;
+                            variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
-                            isStart = true;
+                            variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 5) {
-                            flagSoal = 5;
+                            variables.put("flagSoal",5);
                             int soalNumber = (int) (Math.random() * (9 - 1));
                             String soal = soal5.get(soalNumber);
-                            soal5Answer = soalNumber+"";
-                            soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?\n\n" + endMessage;
+                            String soal5Answer = soalNumber+"";
+                            variables.put("soal5Answer", soal5Answer);
+                            String soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?\n\n" + endMessage;
+                            variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
-                            isStart = true;
+                            variables.put("start", true);
                         }
                     }
                     // Number pada range yang salah

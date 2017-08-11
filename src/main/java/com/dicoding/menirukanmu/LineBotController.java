@@ -23,19 +23,17 @@ import java.util.*;
 @RequestMapping(value="/linebot")
 public class LineBotController
 {
-    boolean isStart = false;
-    int flagSoal = 0;
-    int JUMLAH_SOAL = 4;
+    int JUMLAH_SOAL = 5;
     String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n" +
             "1 --> Fanta dan Sprite\n" +
             "2 --> Yang ketiga\n" +
             "3 --> Tepok Nyamuk\n" +
-            "4 --> Nol itu Satu";
+            "4 --> Nol itu Satu" +
+            "5 --> Lantai Hotel";
     String endMessage = "Game berakhir, Terima kasih sudah bermain :)";
-//    String soal1Message = "Sebutkan 5 kru topi jerami pada anime One Piece dengan harga tertinggi";
-//    ArrayList<String> soal;
-//    ArrayList<Boolean> answerStatus;
-//    StringBuilder builder = new StringBuilder();
+
+    boolean isStart = false;
+    int flagSoal = 0;
     String soalBundle = "";
     TreeMap<Integer, String> soal1;
     String soal1Answer = "";
@@ -45,6 +43,8 @@ public class LineBotController
     String soal3answer = "";
     TreeMap<Integer, String> soal4;
     String soal4Answer = "";
+    TreeMap<Integer, String> soal5;
+    String soal5Answer = "";
 
     @Autowired
     @Qualifier("com.linecorp.channel_secret")
@@ -122,6 +122,8 @@ public class LineBotController
                     soal3answer = "";
                     soal4.clear();
                     soal4Answer = "";
+                    soal5.clear();
+                    soal5Answer = "";
                     if (payload.events[0].source.type.equals("group")){
                         leaveGR(payload.events[0].source.groupId, "group");
                     } else if (payload.events[0].source.type.equals("room")){
@@ -153,6 +155,8 @@ public class LineBotController
                 soal3answer = "";
                 soal4.clear();
                 soal4Answer = "";
+                soal5.clear();
+                soal5Answer = "";
                 replyToUser(targetID, endMessage);
             }
             // User minta soal
@@ -211,6 +215,17 @@ public class LineBotController
                         soal4.clear();
                         replyToUser(targetID, "Ya kamu benar\nJawabannya adalah " + soal4Answer + "\n\n" + endMessage);
                         soal4Answer = "";
+                    } else {
+                        replyToUser(targetID, "Salah !!");
+                    }
+                } else if (flagSoal == 5) {
+                    if (message.equalsIgnoreCase(soal5Answer)) {
+                        isStart = false;
+                        flagSoal = 0;
+                        soalBundle = "";
+                        soal5.clear();
+                        replyToUser(targetID, "Ya kamu benar\nKamu berada di lantai " + soal5Answer + "\n\n" + endMessage);
+                        soal5Answer = "";
                     } else {
                         replyToUser(targetID, "Salah !!");
                     }
@@ -308,6 +323,27 @@ public class LineBotController
                             String soal = soal4.get(soalNumber);
                             soal4Answer = soalNumber + "";
                             soalBundle = "Game Dimulai \n============\n\nNol itu satu\n" + soal + " berapa ?";
+
+                            replyToUser(targetID, soalBundle);
+                            isStart = true;
+                        } else if (Integer.parseInt(arrInput[1]) == 5) {
+                            flagSoal = 5;
+
+                            soal5 = new TreeMap<>();
+                            soal5.put(1, "Kamu berada di lantai 2, belok kiri");
+                            soal5.put(2, "Kamu berada di lantai 3, belok kiri");
+                            soal5.put(3, "Kamu berada di lantai 9, naik dua lantai");
+                            soal5.put(4, "Kamu berada di lantai 4, turun satu lantai, belok kanan, naik satu lantai, belok kiri");
+                            soal5.put(5, "Kamu berada di lantai 7, belok kanan, naik satu lantai");
+                            soal5.put(6, "Kamu berada di lantai 8, naik satu lantai, belok kanan");
+                            soal5.put(7, "Kamu berada di lantai 6, turun satu lantai, belok kiri dua kali");
+                            soal5.put(8, "Kamu berada di lantai 1, turun dua lantai, belok kanan");
+                            soal5.put(9, "Kamu berada di lantai 5, belok kanan, turun satu lantai");
+
+                            int soalNumber = (int) (Math.random() * (9 - 1));
+                            String soal = soal5.get(soalNumber);
+                            soal5Answer = soalNumber+"";
+                            soalBundle = "Game Dimulai \n============\n\nKamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?";
 
                             replyToUser(targetID, soalBundle);
                             isStart = true;

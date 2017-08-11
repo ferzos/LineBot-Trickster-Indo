@@ -188,7 +188,7 @@ public class LineBotController
                         replyToUser(targetID, "Salah !!");
                     }
                 } else if (flagSoal == 2) {
-                    if (arrInput[0].equalsIgnoreCase("yang") && arrInput[1].equalsIgnoreCase("ketiga")) {
+                    if (arrInput[0].equalsIgnoreCase("yang") && arrInput[1].equalsIgnoreCase("ketiga") && arrInput[2] != null) {
                         isStart = false;
                         flagSoal = 0;
                         soalBundle = "";

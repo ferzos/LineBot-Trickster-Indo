@@ -80,10 +80,10 @@ public class LineBotController
 
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
-                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Trido. Mari kita bermain :). Ketik \"trido help\" untuk memulai permainan");
+                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Trido. Mari kita bermain :)\nKetik \"trido help\" untuk memulai permainan");
             }
             if (payload.events[0].source.type.equals("room")){
-                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Trido. Mari kita bermain :). Ketik \"trido help\" untuk memulai permainan");
+                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Trido. Mari kita bermain :)\nKetik \"trido help\" untuk memulai permainan");
             }
         } else if (eventType.equals("message")){
             if (payload.events[0].source.type.equals("group")){

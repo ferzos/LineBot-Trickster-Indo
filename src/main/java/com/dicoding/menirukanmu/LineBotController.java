@@ -109,7 +109,6 @@ public class LineBotController
             } else {
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
-                userId = payload.events[0].source.userId;
 
                 if (!msgText.contains("bye trido")){
                     try {
@@ -174,6 +173,9 @@ public class LineBotController
             // User minta soal
             else if (message.equalsIgnoreCase("soal")) {
                 replyToUser(replyToken, soalBundle);
+            }
+            else if (message.equalsIgnoreCase("flag")) {
+                replyToUser(replyToken, relativeValueMap.get(targetId).get("flagSoal")+"");
             }
             // User masukin input
             else {

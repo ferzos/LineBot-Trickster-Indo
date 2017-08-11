@@ -89,8 +89,14 @@ public class LineBotController
         } else if (eventType.equals("message")){
             if (payload.events[0].source.type.equals("group")){
                 idTarget = payload.events[0].source.groupId;
+                if (!relativeValueMap.containsKey(idTarget)){
+                    relativeValueMap.put(idTarget, makeNewRelativeValue(idTarget));
+                }
             } else if (payload.events[0].source.type.equals("room")){
                 idTarget = payload.events[0].source.roomId;
+                if (!relativeValueMap.containsKey(idTarget)){
+                    relativeValueMap.put(idTarget, makeNewRelativeValue(idTarget));
+                }
             } else if (payload.events[0].source.type.equals("user")){
                 idTarget = payload.events[0].source.userId;
                 if (!relativeValueMap.containsKey(idTarget)){

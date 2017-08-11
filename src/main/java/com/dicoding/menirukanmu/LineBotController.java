@@ -32,7 +32,7 @@ public class LineBotController
             "5 --> Lantai Hotel";
     String headerMessage = "============\nGame Dimulai \n============\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
-    String endMessage = "Ketik \"end the game\" untuk mengakhiri permainan";
+    String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end the game\" untuk mengakhiri permainan";
 
     boolean isStart = false;
     int flagSoal = 0;
@@ -285,7 +285,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
-                            soalBundle = headerMessage + "Yang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n" + endMessage;
+                            soalBundle = headerMessage + "Yang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
                             replyToUser(targetID, soalBundle);
                             isStart = true;
                         } else if (Integer.parseInt(arrInput[1]) == 3) {
@@ -307,7 +307,7 @@ public class LineBotController
                             for (int i = 0; i < jumlahTepokan; i++) {
                                 plok += "Plok!! ";
                             }
-                            soalBundle = headerMessage + plok + "\n" + soal3.get(soalNumber) + " ?\n" + endMessage;
+                            soalBundle = headerMessage + plok + "\n" + soal3.get(soalNumber) + " ?\n\n" + endMessage;
                             soal3answer = soal3.get(soalNumber).split(" ").length + "";
                             replyToUser(targetID, soalBundle);
                             isStart = true;
@@ -324,7 +324,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal4.get(soalNumber);
                             soal4Answer = soalNumber + "";
-                            soalBundle = headerMessage + "Nol itu satu\n" + soal + " berapa ?\n" + endMessage;
+                            soalBundle = headerMessage + "Nol itu satu\n" + soal + " berapa ?\n\n" + endMessage;
 
                             replyToUser(targetID, soalBundle);
                             isStart = true;
@@ -345,7 +345,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * (9 - 1));
                             String soal = soal5.get(soalNumber);
                             soal5Answer = soalNumber+"";
-                            soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?\n" + endMessage;
+                            soalBundle = headerMessage + "Kamu berada di hotel digital\n" + soal + " dimana kamu sekarang ?\n\n" + endMessage;
 
                             replyToUser(targetID, soalBundle);
                             isStart = true;

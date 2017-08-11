@@ -33,6 +33,7 @@ public class LineBotController
     String headerMessage = "============\nGame Dimulai \n============\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end the game\" untuk mengakhiri permainan";
+    HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
 
     boolean isStart = false;
     int flagSoal = 0;
@@ -76,7 +77,6 @@ public class LineBotController
         String msgText = " ";
         String idTarget = " ";
         String eventType = payload.events[0].type;
-        String userId = "";
 
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
@@ -92,6 +92,9 @@ public class LineBotController
                 idTarget = payload.events[0].source.roomId;
             } else if (payload.events[0].source.type.equals("user")){
                 idTarget = payload.events[0].source.userId;
+                if (!relativeValueMap.containsKey(idTarget)){
+                    relativeValueMap.put(idTarget, makeNewRelativeValue(idTarget));
+                }
             }
 
             if (!payload.events[0].message.type.equals("text")){
@@ -99,19 +102,24 @@ public class LineBotController
             } else {
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
-                userId = payload.events[0].source.userId;
 
                 if (!msgText.contains("bye trido")){
-                    try {
-                        // Ini ori
-                        // getMessageData(msgText, idTarget);
-
-                        getMessageData(msgText, payload.events[0].replyToken);
-
-                    } catch (IOException e) {
-                        System.out.println("Exception is raised ");
-                        e.printStackTrace();
-                    }
+//                    try {
+//                        // Ini ori
+//                        // getMessageData(msgText, idTarget);
+//
+////                         ini yang jalan
+////                         getMessageData(msgText, payload.events[0].replyToken);
+//
+//                        String message = relativeValueMap.get(idTarget).get("flagSoal") + "";
+//                        replyToUser(payload.events[0].replyToken, message);
+//
+//                    } catch (IOException e) {
+//                        System.out.println("Exception is raised ");
+//                        e.printStackTrace();
+//                    }
+                    String message = relativeValueMap.get(idTarget).get("id") + "";
+                    replyToUser(payload.events[0].replyToken, message);
                 } else {
                     isStart = false;
                     flagSoal = 0;
@@ -249,13 +257,12 @@ public class LineBotController
                     if (kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
                             flagSoal = 1;
-                            // Buat soal dan mulai permainan
                             soal1 = new TreeMap<>();
                             soal1.put(0, "Pepsi");
                             soal1.put(1, "Root beer A&W");
                             soal1.put(2, "Coca-cola");
                             soal1.put(3, "Coklat Panas");
-                            soal1.put(4, "Jus mangga + Jus alpukat ");
+                            soal1.put(4, "Jus mangga + Jus alpukat");
                             int soalNumber = (int) (Math.random() * (4 - 0));
                             String soal = soal1.get(soalNumber);
                             soal1Answer = soalNumber + "000";
@@ -417,5 +424,20 @@ public class LineBotController
             System.out.println("Exception is raised ");
             e.printStackTrace();
         }
+    }
+
+    private HashMap<String, Object> makeNewRelativeValue(String idTarget) {
+        HashMap<String, Object> initValue = new HashMap<>();
+
+        initValue.put("id", idTarget);
+        initValue.put("start", false);
+        initValue.put("flagSoal", 0);
+        initValue.put("soalBundle", "");
+        initValue.put("soal1Answer", "");
+        initValue.put("soal3Answer", "");
+        initValue.put("soal4Answer", "");
+        initValue.put("soal5Answer", "");
+
+        return initValue;
     }
 }

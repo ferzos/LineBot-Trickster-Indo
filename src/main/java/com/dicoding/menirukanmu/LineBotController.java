@@ -24,11 +24,11 @@ import java.util.*;
 public class LineBotController
 {
     int JUMLAH_SOAL = 5;
-    String startMessage = "Silahkan ketik \"start <kode soal>\" untuk memulai permainan\nKode soal:\n" +
+    String startMessage = "Silahkan ketik \"start <nomor soal>\" untuk memulai permainan\nContoh: start 1\nKode soal:\n" +
             "1 --> Fanta dan Sprite\n" +
             "2 --> Yang ketiga\n" +
             "3 --> Tepok Nyamuk\n" +
-            "4 --> Nol itu Satu\n" +
+            "4 --> Bumi itu bulat\n" +
             "5 --> Lantai Hotel";
     String headerMessage = "============\nGame Dimulai \n============\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
@@ -152,6 +152,7 @@ public class LineBotController
             } else {
                 msgText = payload.events[0].message.text;
                 msgText = msgText.toLowerCase();
+                msgText = msgText.trim();
 
                 if (!msgText.contains("bye trido")){
                     try {
@@ -295,7 +296,7 @@ public class LineBotController
                             String soal = soal4.get(soalNumber);
                             String soal4Answer = soalNumber + "";
                             variables.put("soal4Answer", soal4Answer);
-                            String soalBundle = headerMessage + "Nol itu satu\n" + soal + " berapa ?\n\n" + endMessage;
+                            String soalBundle = headerMessage + "Bumi itu bulat\n" + soal + " berapa ?\n\n" + endMessage;
                             variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
                             variables.put("start", true);

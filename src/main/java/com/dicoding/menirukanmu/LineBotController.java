@@ -28,7 +28,7 @@ public class LineBotController
             "1 --> Nasi kucing 1000, Teh gratis\n" +
             "2 --> Yang ketiga\n" +
             "3 --> Tepok Nyamuk\n" +
-            "4 --> Bumi itu bulat\n" +
+            "4 --> Tahu bulat\n" +
             "5 --> Lantai Hotel\n\n" +
             "Ketik \"bye trido\" untuk mengeluarkan trido dari grup";
     String headerMessage = "============\nGame Dimulai \n============\n\n";
@@ -40,7 +40,7 @@ public class LineBotController
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
     ArrayList<String> soal3;
-    TreeMap<Integer, String> soal4;
+    TreeMap<Integer, String[]> soal4;
     TreeMap<Integer, String> soal5;
 
     public LineBotController() {
@@ -126,11 +126,46 @@ public class LineBotController
 
         /*SOAL 4*/
         soal4 = new TreeMap<>();
-        soal4.put(0, "7+5+3");
-        soal4.put(1, "9+1+4");
-        soal4.put(2, "8+2");
-        soal4.put(3, "6+9+0+4+1+3");
-        soal4.put(4, "8+2+1+7+3+9+6+4");
+        String[] soal4Nol = new String[5];
+        soal4Nol[0] = "1+3";
+        soal4Nol[1] = "7+5+3";
+        soal4Nol[2] = "1+7+4+4";
+        soal4Nol[3] = "1+1+1+1+1";
+        soal4Nol[4] = "1+3+5+7+5+3+1";
+
+        String[] soal4Satu = new String[5];
+        soal4Satu[0] = "6+4";
+        soal4Satu[1] = "1+9+4";
+        soal4Satu[2] = "4+3+9+7";
+        soal4Satu[3] = "1+1+2+7+6";
+        soal4Satu[4] = "4+7+7+9+4+3";
+
+        String[] soal4Dua = new String[5];
+        soal4Dua[0] = "8+2";
+        soal4Dua[1] = "6+2+9";
+        soal4Dua[2] = "4+9+9+4";
+        soal4Dua[3] = "1+4+7+2+8";
+        soal4Dua[4] = "1+1+3+8+7+4";
+
+        String[] soal4Tiga = new String[5];
+        soal4Tiga[0] = "8+6";
+        soal4Tiga[1] = "8+7+6";
+        soal4Tiga[2] = "6+7+9+3+6";
+        soal4Tiga[3] = "8+1+7+4+2+6";
+        soal4Tiga[4] = "9+8+1+7+5+5+1";
+
+        String[] soal4Empat = new String[5];
+        soal4Empat[0] = "8+8";
+        soal4Empat[1] = "8+1+8";
+        soal4Empat[2] = "6+6+9+9";
+        soal4Empat[3] = "6+4+9+7+8";
+        soal4Empat[4] = "8+5+6+3+9+1";
+
+        soal4.put(0, soal4Nol);
+        soal4.put(1, soal4Satu);
+        soal4.put(2, soal4Dua);
+        soal4.put(3, soal4Tiga);
+        soal4.put(4, soal4Empat);
 
         /*SOAL 5*/
         soal5 = new TreeMap<>();
@@ -312,9 +347,9 @@ public class LineBotController
                     if (kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
                             variables.put("flagSoal",1);
-                            int soalNumber = (int) (Math.random() * (3 - 0));
+                            int soalNumber = (int) (Math.random() * 3);
                             String[] kumpulanSoal = soal1.get(soalNumber);
-                            int soalChooser = (int)(Math.random() * (kumpulanSoal.length - 0));
+                            int soalChooser = (int)(Math.random() * kumpulanSoal.length);
                             String soal = kumpulanSoal[soalChooser];
                             String soal1Answer = soalNumber + "000";
                             variables.put("soal1Answer", soal1Answer);
@@ -324,7 +359,7 @@ public class LineBotController
                             variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 2) {
                             variables.put("flagSoal",2);
-                            int soalNumber = (int) (Math.random() * (10 - 0));
+                            int soalNumber = (int) (Math.random() * 10);
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
                             String soalBundle = headerMessage + "Jawab dengan bahasa indonesia yang baik dan benar\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
@@ -333,7 +368,7 @@ public class LineBotController
                             variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 3) {
                             variables.put("flagSoal",3);
-                            int soalNumber = (int) (Math.random() * (7 - 0));
+                            int soalNumber = (int) (Math.random() * 7);
                             int jumlahTepokan = (int) (Math.random() * 10);
                             String plok = "Plok!! ";
                             for (int i = 0; i < jumlahTepokan ; i++) {
@@ -347,11 +382,13 @@ public class LineBotController
                             variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 4) {
                             variables.put("flagSoal",4);
-                            int soalNumber = (int) (Math.random() * (4 - 0));
-                            String soal = soal4.get(soalNumber);
+                            int soalNumber = (int) (Math.random() * 4);
+                            String[] kumpulanSoal = soal4.get(soalNumber);
+                            int soalChooser = (int)(Math.random() * (kumpulanSoal.length));
+                            String soal = kumpulanSoal[soalChooser];
                             String soal4Answer = soalNumber + "";
                             variables.put("soal4Answer", soal4Answer);
-                            String soalBundle = headerMessage + "Bumi itu bulat\n" + soal + " berapa ?\n\n" + endMessage;
+                            String soalBundle = headerMessage + "Tahu itu bulat\n" + soal + " berapa ?\n\n" + endMessage;
                             variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
                             variables.put("start", true);

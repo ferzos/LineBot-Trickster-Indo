@@ -101,11 +101,17 @@ public class LineBotController
         /*SOAL 2*/
         soal2Pertama = new ArrayList<>();
         soal2Kedua = new ArrayList<>();
-        soal2Pertama.add("Emas");soal2Kedua.add("Perak");
-        soal2Pertama.add("Mobil");soal2Kedua.add("Motor");
-        soal2Pertama.add("Baju");soal2Kedua.add("Celana");
-        soal2Pertama.add("Tikus");soal2Kedua.add("Kerbau");
-        soal2Pertama.add("Langit");soal2Kedua.add("Laut");
+        soal2Pertama.add("Ojek");soal2Kedua.add("Bemo");
+        soal2Pertama.add("Borobudur");soal2Kedua.add("Prambanan");
+        soal2Pertama.add("Delman");soal2Kedua.add("Becak");
+        soal2Pertama.add("Tari saman");soal2Kedua.add("Tari kecak");
+        soal2Pertama.add("Petruk");soal2Kedua.add("Semar");
+        soal2Pertama.add("Angklung");soal2Kedua.add("Kolintang");
+        soal2Pertama.add("Keris");soal2Kedua.add("Batik");
+        soal2Pertama.add("Rasa sayange");soal2Kedua.add("Jali-jali");
+        soal2Pertama.add("Komodo");soal2Kedua.add("Orangutan");
+        soal2Pertama.add("Merapi");soal2Kedua.add("Semeru");
+
 
         /*SOAL 3*/
         soal3 = new ArrayList<>();
@@ -306,7 +312,7 @@ public class LineBotController
                     if (kodeSoal > 0 && Integer.parseInt(arrInput[1]) <= JUMLAH_SOAL) {
                         if (Integer.parseInt(arrInput[1]) == 1) {
                             variables.put("flagSoal",1);
-                            int soalNumber = (int) (Math.random() * (4 - 0));
+                            int soalNumber = (int) (Math.random() * (3 - 0));
                             String[] kumpulanSoal = soal1.get(soalNumber);
                             int soalChooser = (int)(Math.random() * (kumpulanSoal.length - 0));
                             String soal = kumpulanSoal[soalChooser];
@@ -318,10 +324,10 @@ public class LineBotController
                             variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 2) {
                             variables.put("flagSoal",2);
-                            int soalNumber = (int) (Math.random() * (4 - 0));
+                            int soalNumber = (int) (Math.random() * (10 - 0));
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
-                            String soalBundle = headerMessage + "Yang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
+                            String soalBundle = headerMessage + "Jawab dengan bahasa indonesia yang baik dan benar\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
                             variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
                             variables.put("start", true);

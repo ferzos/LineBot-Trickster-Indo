@@ -24,8 +24,8 @@ import java.util.*;
 public class LineBotController
 {
     int JUMLAH_SOAL = 5;
-    String startMessage = "Silahkan ketik \"start <nomor soal>\" untuk memulai permainan\nContoh: start 1\nKode soal:\n" +
-            "1 --> Fanta dan Sprite\n" +
+    String startMessage = "Silahkan ketik \"start <nomor soal>\" untuk memulai permainan\nContoh: start 1\n\nKode soal:\n" +
+            "1 --> Nasi kucing 1000, Teh gratis\n" +
             "2 --> Yang ketiga\n" +
             "3 --> Tepok Nyamuk\n" +
             "4 --> Bumi itu bulat\n" +
@@ -36,7 +36,7 @@ public class LineBotController
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
 
-    TreeMap<Integer, String> soal1;
+    TreeMap<Integer, String[]> soal1;
     ArrayList<String> soal2Pertama;
     ArrayList<String> soal2Kedua;
     ArrayList<String> soal3;
@@ -46,11 +46,57 @@ public class LineBotController
     public LineBotController() {
         /*SOAL 1*/
         soal1 = new TreeMap<>();
-        soal1.put(0, "Pepsi");
-        soal1.put(1, "Root beer A&W");
-        soal1.put(2, "Coca-cola");
-        soal1.put(3, "Coklat Panas");
-        soal1.put(4, "Jus mangga + Jus alpukat ");
+        String[] soal1Gratis = new String[10];
+        soal1Gratis[0] = "Gudeg";
+        soal1Gratis[1] = "Cireng";
+        soal1Gratis[2] = "Perkedel";
+        soal1Gratis[3] = "Cilok";
+        soal1Gratis[4] = "Sekoteng";
+        soal1Gratis[5] = "Pempek";
+        soal1Gratis[6] = "Kue cubit";
+        soal1Gratis[7] = "Pecel lele";
+        soal1Gratis[8] = "Pepes";
+        soal1Gratis[9] = "Cendol";
+
+        String[] soal1Seribu = new String[10];
+        soal1Seribu[0] = "Surabi";
+        soal1Seribu[1] = "Bajigur";
+        soal1Seribu[2] = "Rawon";
+        soal1Seribu[3] = "Rendang";
+        soal1Seribu[4] = "Bakso";
+        soal1Seribu[5] = "Jamu";
+        soal1Seribu[6] = "Wedang ronde";
+        soal1Seribu[7] = "Ketoprak";
+        soal1Seribu[8] = "Kerak telor";
+        soal1Seribu[9] = "Seblak";
+
+        String[] soal1DuaRibu = new String[10];
+        soal1DuaRibu[0] = "Nasi ulam";
+        soal1DuaRibu[1] = "Gado-gado";
+        soal1DuaRibu[2] = "Opor ayam";
+        soal1DuaRibu[3] = "Otak-otak";
+        soal1DuaRibu[4] = "Papeda";
+        soal1DuaRibu[5] = "Soda gembira";
+        soal1DuaRibu[6] = "Wedang Jahe";
+        soal1DuaRibu[7] = "Cah kangkung";
+        soal1DuaRibu[8] = "Soto ayam";
+        soal1DuaRibu[9] = "Sate kambing";
+
+        String[] soal1TigaRibu = new String[10];
+        soal1TigaRibu[0] = "Gulai ikan patin";
+        soal1TigaRibu[1] = "Gulai belacan";
+        soal1TigaRibu[2] = "Teh manis hangat";
+        soal1TigaRibu[3] = "Martabak telor";
+        soal1TigaRibu[4] = "Pisang bakar";
+        soal1TigaRibu[5] = "Ikan bakar";
+        soal1TigaRibu[6] = "Sate ayam";
+        soal1TigaRibu[7] = "Es kelapa muda";
+        soal1TigaRibu[8] = "Martabak";
+
+        soal1.put(0, soal1Gratis);
+        soal1.put(1, soal1Seribu);
+        soal1.put(2, soal1DuaRibu);
+        soal1.put(3, soal1TigaRibu);
 
         /*SOAL 2*/
         soal2Pertama = new ArrayList<>();
@@ -261,10 +307,12 @@ public class LineBotController
                         if (Integer.parseInt(arrInput[1]) == 1) {
                             variables.put("flagSoal",1);
                             int soalNumber = (int) (Math.random() * (4 - 0));
-                            String soal = soal1.get(soalNumber);
+                            String[] kumpulanSoal = soal1.get(soalNumber);
+                            int soalChooser = (int)(Math.random() * (kumpulanSoal.length - 0));
+                            String soal = kumpulanSoal[soalChooser];
                             String soal1Answer = soalNumber + "000";
                             variables.put("soal1Answer", soal1Answer);
-                            String soalBundle = headerMessage + "Fanta 2000, kalo Sprite gratis. \n" + soal + " berapa ?\n\n" + endMessage;
+                            String soalBundle = headerMessage + "Nasi kucing 1000, kalo Teh gratis. \n" + soal + " berapa ?\n\n" + endMessage;
                             variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
                             variables.put("start", true);

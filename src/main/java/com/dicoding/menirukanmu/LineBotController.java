@@ -29,7 +29,8 @@ public class LineBotController
             "2 --> Yang ketiga\n" +
             "3 --> Tepok Nyamuk\n" +
             "4 --> Bumi itu bulat\n" +
-            "5 --> Lantai Hotel";
+            "5 --> Lantai Hotel\n\n" +
+            "Ketik \"bye trido\" untuk mengeluarkan trido dari grup";
     String headerMessage = "============\nGame Dimulai \n============\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";

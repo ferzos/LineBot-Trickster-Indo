@@ -30,7 +30,7 @@ public class LineBotController
             "3 --> Tepok Nyamuk\n" +
             "4 --> Tahu bulat\n" +
             "5 --> Lantai Hotel\n\n" +
-            "Ketik \"bye teki\" untuk mengeluarkan teki dari grup";
+            "Ketik \"bye tido\" untuk mengeluarkan tido dari grup";
     String headerMessage = "============\nGame Dimulai \n============\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
@@ -211,10 +211,10 @@ public class LineBotController
 
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
-                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Teki. Mari kita bermain :)\nKetik \"teki help\" untuk bantuan permainan");
+                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
             }
             if (payload.events[0].source.type.equals("room")){
-                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Teki. Mari kita bermain :)\nKetik \"teki help\" untuk bantuan permainan");
+                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
             }
         } else if (eventType.equals("message")){
             if (payload.events[0].source.type.equals("group")){
@@ -242,7 +242,7 @@ public class LineBotController
                 msgText = msgText.toLowerCase();
                 msgText = msgText.trim();
 
-                if (!msgText.contains("bye teki")){
+                if (!msgText.contains("bye tido")){
                     try {
                         // Ini ori
                         // getMessageData(msgText, idTarget);
@@ -335,7 +335,7 @@ public class LineBotController
         // Game belum dimulai
         else {
             // User ketik "help"
-            if (message.equalsIgnoreCase("teki help")) {
+            if (message.equalsIgnoreCase("tido help")) {
                 replyToUser(replyToken, startMessage);
             }
             // User ketik "start <something>"

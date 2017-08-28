@@ -6,7 +6,13 @@ import com.linecorp.bot.client.LineMessagingServiceBuilder;
 import com.linecorp.bot.client.LineSignatureValidator;
 import com.linecorp.bot.model.PushMessage;
 import com.linecorp.bot.model.ReplyMessage;
+import com.linecorp.bot.model.action.Action;
+import com.linecorp.bot.model.action.MessageAction;
+import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.message.template.CarouselColumn;
+import com.linecorp.bot.model.message.template.CarouselTemplate;
+import com.linecorp.bot.model.message.template.Template;
 import com.linecorp.bot.model.response.BotApiResponse;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +48,10 @@ public class LineBotController
     ArrayList<String> soal3;
     TreeMap<Integer, String[]> soal4;
     TreeMap<Integer, String> soal5;
+
+
+    List<CarouselColumn> columns = new ArrayList<>();
+    CarouselTemplate carouselTemplate = new CarouselTemplate(columns);
 
     public LineBotController() {
         /*SOAL 1*/
@@ -178,6 +188,12 @@ public class LineBotController
         soal5.put(7, "Kamu berada di lantai 6, turun satu lantai, belok kiri dua kali");
         soal5.put(8, "Kamu berada di lantai 1, turun dua lantai, belok kanan");
         soal5.put(9, "Kamu berada di lantai 5, belok kanan, turun satu lantai");
+
+        /*======================================================================*/
+
+        List<Action> actions = new ArrayList<>();
+        actions.add(new MessageAction("Mulai", "tido help"));
+        columns.add(new CarouselColumn("https://www.w3schools.com/css/img_fjords.jpg", "ini title", "ini text", actions));
     }
 
     @Autowired
@@ -419,7 +435,8 @@ public class LineBotController
 
     private void replyToUser(String rToken, String messageToUser){
         TextMessage textMessage = new TextMessage(messageToUser);
-        ReplyMessage replyMessage = new ReplyMessage(rToken, textMessage);
+        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
+        ReplyMessage replyMessage = new ReplyMessage(rToken, templateMessage);
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)
@@ -433,21 +450,21 @@ public class LineBotController
         }
     }
 
-    private void pushMessage(String sourceId, String txt){
-        TextMessage textMessage = new TextMessage(txt);
-        PushMessage pushMessage = new PushMessage(sourceId,textMessage);
-        try {
-            Response<BotApiResponse> response = LineMessagingServiceBuilder
-            .create(lChannelAccessToken)
-            .build()
-            .pushMessage(pushMessage)
-            .execute();
-            System.out.println(response.code() + " " + response.message());
-        } catch (IOException e) {
-            System.out.println("Exception is raised ");
-            e.printStackTrace();
-        }
-    }
+//    private void pushMessage(String sourceId, String txt){
+//        TextMessage textMessage = new TextMessage(txt);
+//        PushMessage pushMessage = new PushMessage(sourceId,textMessage);
+//        try {
+//            Response<BotApiResponse> response = LineMessagingServiceBuilder
+//            .create(lChannelAccessToken)
+//            .build()
+//            .pushMessage(pushMessage)
+//            .execute();
+//            System.out.println(response.code() + " " + response.message());
+//        } catch (IOException e) {
+//            System.out.println("Exception is raised ");
+//            e.printStackTrace();
+//        }
+//    }
 
     private void leaveGR(String id, String type){
         try {

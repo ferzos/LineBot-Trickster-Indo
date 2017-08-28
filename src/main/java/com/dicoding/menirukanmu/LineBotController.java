@@ -429,14 +429,16 @@ public class LineBotController
                 else {
                     replyToUser(replyToken, startMessage);
                 }
+            } else {
+                replyToUser(replyToken, startMessage);
             }
         }
     }
 
     private void replyToUser(String rToken, String messageToUser){
-        TextMessage textMessage = new TextMessage(messageToUser);
-//        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
-        ReplyMessage replyMessage = new ReplyMessage(rToken, textMessage);
+//        TextMessage textMessage = new TextMessage(messageToUser);
+        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
+        ReplyMessage replyMessage = new ReplyMessage(rToken, templateMessage);
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)

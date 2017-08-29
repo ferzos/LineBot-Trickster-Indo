@@ -43,6 +43,16 @@ public class LineBotController
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
     String joinMessageImageUrl = "https://www.w3schools.com/css/img_fjords.jpg";
+    String gameOneTitle = "Tebak Harga";
+    String gameOneText = "Tebak-tebakan lucu seputar harga kuliner dari nusantara";
+    String gameTwoTitle = "Yang ketiga";
+    String gameTwoText = "Untuk setiap pasangan, pasti akan selalu ada pihak ketiga";
+    String gameThreeTitle = "Tepok Nyamuk";
+    String gameThreeText = "Bagi yang kesel kalo digigit nyamuk, yuk kita berhitung bersama berapa nyamuk yang mati";
+    String gameFourTitle = "Tahu Bulat";
+    String gameFourText = "Tahu bulat itu enak sekali, berapa banyak tahu yang harus kita beli ya ?";
+    String gameFiveTitle = "Hotel digital";
+    String gameFiveText = "Tido kesasar nih di hotel digital, di lantai mana ya doi sekarang ?";
 
     TreeMap<Integer, String[]> soal1;
     ArrayList<String> soal2Pertama;
@@ -54,11 +64,12 @@ public class LineBotController
     /*===============================================================*/
 
     List<Action> joinActions = new ArrayList<>();
-    TemplateMessage tmJoin = new TemplateMessage("Halo semuanya, namaku Tido. Mari kita bermain :)\\nKetik \\\"tido help\\\" untuk bantuan permainan",
+    TemplateMessage tmJoin = new TemplateMessage("Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan",
             new ButtonsTemplate(joinMessageImageUrl, "Greetings!", "Halo semuanya, namaku Tido. Mari kita bermain :)", joinActions));
 
-    List<CarouselColumn> columns = new ArrayList<>();
-    CarouselTemplate carouselTemplate = new CarouselTemplate(columns);
+    List<CarouselColumn> helpColumns = new ArrayList<>();
+    CarouselTemplate helpCarouselTemplate = new CarouselTemplate(helpColumns);
+    TemplateMessage tmHelp = new TemplateMessage(startMessage, helpCarouselTemplate);
 
     public LineBotController() {
         /*SOAL 1*/
@@ -200,9 +211,23 @@ public class LineBotController
 
         joinActions.add(new MessageAction("Mulai", "tido help"));
 
-        List<Action> actions = new ArrayList<>();
-        actions.add(new MessageAction("Mulai", "tido help"));
-        columns.add(new CarouselColumn("https://www.w3schools.com/css/img_fjords.jpg", "ini title", "ini text", actions));
+        List<Action> helpActionsOne = new ArrayList<>();
+        List<Action> helpActionsTwo = new ArrayList<>();
+        List<Action> helpActionsThree = new ArrayList<>();
+        List<Action> helpActionsFour = new ArrayList<>();
+        List<Action> helpActionsFive = new ArrayList<>();
+
+        helpActionsOne.add(new MessageAction("Mulai", "start 1"));
+        helpActionsTwo.add(new MessageAction("Mulai", "start 2"));
+        helpActionsThree.add(new MessageAction("Mulai", "start 3"));
+        helpActionsFour.add(new MessageAction("Mulai", "start 4"));
+        helpActionsFive.add(new MessageAction("Mulai", "start 5"));
+
+        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameOneTitle, gameOneText, helpActionsOne));
+        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameTwoTitle, gameTwoText, helpActionsTwo));
+        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameThreeTitle, gameThreeText, helpActionsThree));
+        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFourTitle, gameFourText, helpActionsFour));
+        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFiveTitle, gameFiveText, helpActionsFive));
     }
 
     @Autowired
@@ -237,11 +262,9 @@ public class LineBotController
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
                 replyToUser(payload.events[0].replyToken, "join");
-                //replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
             }
             if (payload.events[0].source.type.equals("room")){
                 replyToUser(payload.events[0].replyToken, "join");
-                //replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
             }
         } else if (eventType.equals("message")){
             if (payload.events[0].source.type.equals("group")){
@@ -363,7 +386,7 @@ public class LineBotController
         else {
             // User ketik "help"
             if (message.equalsIgnoreCase("tido help")) {
-                replyToUser(replyToken, startMessage);
+                replyToUser(replyToken, "help");
             }
             // User ketik "start <something>"
             else if (arrInput[0].equalsIgnoreCase("start")) {
@@ -452,6 +475,8 @@ public class LineBotController
         //        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
         if (messageFlag.equalsIgnoreCase("join")) {
             message = tmJoin;
+        } else (messageFlag.equalsIgnoreCase("join")) {
+            message = tmHelp;
         }
         ReplyMessage replyMessage = new ReplyMessage(rToken, message);
         try {

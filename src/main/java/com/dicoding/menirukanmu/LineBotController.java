@@ -61,7 +61,7 @@ public class LineBotController
     /*===============================================================*/
 
     List<Action> joinActions = new ArrayList<>();
-    TemplateMessage tmJoin = new TemplateMessage("Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan",
+    TemplateMessage tmJoin = new TemplateMessage("Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan\n",
             new ButtonsTemplate(joinMessageImageUrl, "Greetings!", "Halo semuanya, namaku Tido. Mari kita bermain :)", joinActions));
 
     List<CarouselColumn> helpColumns = new ArrayList<>();
@@ -409,7 +409,7 @@ public class LineBotController
                             int soalNumber = (int) (Math.random() * 10);
                             String soalPertama = soal2Pertama.get(soalNumber);
                             String soalKedua = soal2Kedua.get(soalNumber);
-                            String soalBundle = headerMessage + "Jawab dengan bahasa indonesia yang baik dan benar\nYang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
+                            String soalBundle = headerMessage + "Jawab dengan bahasa indonesia yang baik dan benar. Yang pertama " + soalPertama + ", Yang kedua " + soalKedua + "\nyang ketiga apa ?\n\n" + endMessage;
                             variables.put("soalBundle", soalBundle);
                             replyToUser(replyToken, soalBundle);
                             variables.put("start", true);
@@ -441,7 +441,7 @@ public class LineBotController
                             variables.put("start", true);
                         } else if (Integer.parseInt(arrInput[1]) == 5) {
                             variables.put("flagSoal",5);
-                            int soalNumber = (int) (Math.random() * (9 - 1));
+                            int soalNumber = (int) (Math.random() * ((9 - 1) + 1));
                             String soal = soal5.get(soalNumber);
                             String soal5Answer = soalNumber+"";
                             variables.put("soal5Answer", soal5Answer);
@@ -460,8 +460,6 @@ public class LineBotController
                 else {
                     replyToUser(replyToken, startMessage);
                 }
-            } else {
-                replyToUser(replyToken, startMessage);
             }
         }
     }

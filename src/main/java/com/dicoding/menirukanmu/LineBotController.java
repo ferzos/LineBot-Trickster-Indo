@@ -43,7 +43,7 @@ public class LineBotController
     String gameOneImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503992850/Game-1_vbqag7.jpg";
     String gameTwoImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503995791/Game-2_nod8ch.jpg";
     String gameThreeImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503995792/Game-3_vzcx4z.jpg";
-    String gameFourImage = "";
+    String gameFourImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1504018698/Game-4_prd7ak.jpg";
     String gameFiveImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503995791/Game-5_gizg3v.jpg";
     String gameOneTitle = "Tebak Harga";
     String gameOneText = "Tebak-tebakan lucu seputar harga kuliner dari nusantara";
@@ -228,7 +228,7 @@ public class LineBotController
         helpColumns.add(new CarouselColumn(gameOneImage, gameOneTitle, gameOneText, helpActionsOne));
         helpColumns.add(new CarouselColumn(gameTwoImage, gameTwoTitle, gameTwoText, helpActionsTwo));
         helpColumns.add(new CarouselColumn(gameThreeImage, gameThreeTitle, gameThreeText, helpActionsThree));
-        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFourTitle, gameFourText, helpActionsFour));
+        helpColumns.add(new CarouselColumn(gameFourImage, gameFourTitle, gameFourText, helpActionsFour));
         helpColumns.add(new CarouselColumn(gameFiveImage, gameFiveTitle, gameFiveText, helpActionsFive));
     }
 

@@ -52,9 +52,9 @@ public class LineBotController
     String gameThreeTitle = "Tepok Nyamuk";
     String gameThreeText = "Kesel kalo digigit nyamuk? Yuk kita tepok nyamuk bersama";
     String gameFourTitle = "Tahu Bulat";
-    String gameFourText = "Belajar berhitung menggunakan tahu bulat ?";
+    String gameFourText = "Tahu bulat digoreng dadakan";
     String gameFiveTitle = "Hotel digital";
-    String gameFiveText = "Bantu tido tahu dimana dia sekarang yuk";
+    String gameFiveText = "Main petak umpet yuk ama tido di hotel digital";
 
     TreeMap<Integer, String[]> soal1;
     ArrayList<String> soal2Pertama;

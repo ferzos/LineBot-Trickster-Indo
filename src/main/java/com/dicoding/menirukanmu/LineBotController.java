@@ -10,6 +10,7 @@ import com.linecorp.bot.model.action.Action;
 import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
+import com.linecorp.bot.model.message.template.ButtonsTemplate;
 import com.linecorp.bot.model.message.template.CarouselColumn;
 import com.linecorp.bot.model.message.template.CarouselTemplate;
 import com.linecorp.bot.model.message.template.Template;
@@ -41,6 +42,7 @@ public class LineBotController
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
+    String joinMessageImageUrl = "https://www.w3schools.com/css/img_fjords.jpg";
 
     TreeMap<Integer, String[]> soal1;
     ArrayList<String> soal2Pertama;
@@ -49,6 +51,11 @@ public class LineBotController
     TreeMap<Integer, String[]> soal4;
     TreeMap<Integer, String> soal5;
 
+    /*===============================================================*/
+
+    List<Action> joinActions = new ArrayList<>();
+    TemplateMessage tmJoin = new TemplateMessage("Halo semuanya, namaku Tido. Mari kita bermain :)\\nKetik \\\"tido help\\\" untuk bantuan permainan",
+            new ButtonsTemplate(joinMessageImageUrl, "Greetings!", "Halo semuanya, namaku Tido. Mari kita bermain :)", joinActions));
 
     List<CarouselColumn> columns = new ArrayList<>();
     CarouselTemplate carouselTemplate = new CarouselTemplate(columns);
@@ -191,6 +198,8 @@ public class LineBotController
 
         /*======================================================================*/
 
+        joinActions.add(new MessageAction("Mulai", "tido help"));
+
         List<Action> actions = new ArrayList<>();
         actions.add(new MessageAction("Mulai", "tido help"));
         columns.add(new CarouselColumn("https://www.w3schools.com/css/img_fjords.jpg", "ini title", "ini text", actions));
@@ -227,10 +236,12 @@ public class LineBotController
 
         if (eventType.equals("join")){
             if (payload.events[0].source.type.equals("group")){
-                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
+                replyToUser(payload.events[0].replyToken, "join");
+                //replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
             }
             if (payload.events[0].source.type.equals("room")){
-                replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
+                replyToUser(payload.events[0].replyToken, "join");
+                //replyToUser(payload.events[0].replyToken, "Halo semuanya, namaku Tido. Mari kita bermain :)\nKetik \"tido help\" untuk bantuan permainan");
             }
         } else if (eventType.equals("message")){
             if (payload.events[0].source.type.equals("group")){
@@ -435,10 +446,14 @@ public class LineBotController
         }
     }
 
-    private void replyToUser(String rToken, String messageToUser){
-        TextMessage textMessage = new TextMessage(messageToUser);
-//        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
-        ReplyMessage replyMessage = new ReplyMessage(rToken, textMessage);
+    private void replyToUser(String rToken, String messageFlag){
+        TemplateMessage message = null;
+        //        TextMessage textMessage = new TextMessage(messageFlag);
+        //        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
+        if (messageFlag.equalsIgnoreCase("join")) {
+            message = tmJoin;
+        }
+        ReplyMessage replyMessage = new ReplyMessage(rToken, message);
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)

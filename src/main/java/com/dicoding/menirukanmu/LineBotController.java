@@ -38,7 +38,7 @@ public class LineBotController
             "4 --> Tahu bulat\n" +
             "5 --> Lantai Hotel\n\n" +
             "Ketik \"bye tido\" untuk mengeluarkan tido dari grup\n";
-    String headerMessage = "============\nGame Dimulai \n============\n\n";
+    String headerMessage = "==========\nGame Dimulai\n==========\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();

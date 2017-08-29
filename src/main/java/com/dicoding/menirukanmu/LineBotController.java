@@ -40,7 +40,7 @@ public class LineBotController
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
     String joinMessageImageUrl = "https://www.w3schools.com/css/img_fjords.jpg";
-    String gameOneImage = "http://res.cloudinary.com/dgcymttpp/image/upload/v1503992850/Game-1_vbqag7.jpg";
+    String gameOneImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503992850/Game-1_vbqag7.jpg";
 
 
 

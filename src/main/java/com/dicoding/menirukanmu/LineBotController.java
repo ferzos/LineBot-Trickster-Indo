@@ -40,6 +40,12 @@ public class LineBotController
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
     String joinMessageImageUrl = "https://www.w3schools.com/css/img_fjords.jpg";
+    String gameOneImage = "http://res.cloudinary.com/dgcymttpp/image/upload/v1503992850/Game-1_vbqag7.jpg";
+
+
+
+
+
     String gameOneTitle = "Tebak Harga";
     String gameOneText = "Tebak-tebakan lucu seputar harga kuliner dari nusantara";
     String gameTwoTitle = "Yang ketiga";
@@ -220,7 +226,7 @@ public class LineBotController
         helpActionsFour.add(new MessageAction("Mulai", "start 4"));
         helpActionsFive.add(new MessageAction("Mulai", "start 5"));
 
-        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameOneTitle, gameOneText, helpActionsOne));
+        helpColumns.add(new CarouselColumn(gameOneImage, gameOneTitle, gameOneText, helpActionsOne));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameTwoTitle, gameTwoText, helpActionsTwo));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameThreeTitle, gameThreeText, helpActionsThree));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFourTitle, gameFourText, helpActionsFour));

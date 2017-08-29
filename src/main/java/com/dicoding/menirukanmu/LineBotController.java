@@ -10,10 +10,7 @@ import com.linecorp.bot.model.action.Action;
 import com.linecorp.bot.model.action.MessageAction;
 import com.linecorp.bot.model.message.TemplateMessage;
 import com.linecorp.bot.model.message.TextMessage;
-import com.linecorp.bot.model.message.template.ButtonsTemplate;
-import com.linecorp.bot.model.message.template.CarouselColumn;
-import com.linecorp.bot.model.message.template.CarouselTemplate;
-import com.linecorp.bot.model.message.template.Template;
+import com.linecorp.bot.model.message.template.*;
 import com.linecorp.bot.model.response.BotApiResponse;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +36,7 @@ public class LineBotController
             "5 --> Lantai Hotel\n\n" +
             "Ketik \"bye tido\" untuk mengeluarkan tido dari grup\n";
     String headerMessage = "==========\nGame Dimulai\n==========\n\n";
-    String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
+    String footMessage = "Game berakhir, Terima kasih sudah bermain :)\n\nKetik \"tido help\" untuk memulai kembali permainan";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
     String joinMessageImageUrl = "https://www.w3schools.com/css/img_fjords.jpg";
@@ -70,8 +67,6 @@ public class LineBotController
     List<CarouselColumn> helpColumns = new ArrayList<>();
     CarouselTemplate helpCarouselTemplate = new CarouselTemplate(helpColumns);
     TemplateMessage tmHelp = new TemplateMessage(startMessage, helpCarouselTemplate);
-
-    List<Action> endAction = new ArrayList<>();
 
     public LineBotController() {
         /*SOAL 1*/
@@ -230,8 +225,6 @@ public class LineBotController
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameThreeTitle, gameThreeText, helpActionsThree));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFourTitle, gameFourText, helpActionsFour));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFiveTitle, gameFiveText, helpActionsFive));
-
-        endAction.add(new MessageAction("End Game", "end game"));
     }
 
     @Autowired
@@ -487,7 +480,6 @@ public class LineBotController
             TextMessage message = new TextMessage(messageFlag);
             replyMessage = new ReplyMessage(rToken, message);
         }
-
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)

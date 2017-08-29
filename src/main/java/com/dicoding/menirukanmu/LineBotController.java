@@ -39,13 +39,12 @@ public class LineBotController
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)\n\nKetik \"tido help\" untuk memulai kembali permainan";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
     HashMap<String, HashMap<String, Object>> relativeValueMap = new HashMap<>();
-    String joinMessageImageUrl = "https://www.w3schools.com/css/img_fjords.jpg";
+    String joinMessageImageUrl = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503996186/Tido_z64qb3.jpg";
     String gameOneImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503992850/Game-1_vbqag7.jpg";
-
-
-
-
-
+    String gameTwoImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503995791/Game-2_nod8ch.jpg";
+    String gameThreeImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503995792/Game-3_vzcx4z.jpg";
+    String gameFourImage = "";
+    String gameFiveImage = "https://res.cloudinary.com/dgcymttpp/image/upload/v1503995791/Game-5_gizg3v.jpg";
     String gameOneTitle = "Tebak Harga";
     String gameOneText = "Tebak-tebakan lucu seputar harga kuliner dari nusantara";
     String gameTwoTitle = "Yang ketiga";
@@ -227,10 +226,10 @@ public class LineBotController
         helpActionsFive.add(new MessageAction("Mulai", "start 5"));
 
         helpColumns.add(new CarouselColumn(gameOneImage, gameOneTitle, gameOneText, helpActionsOne));
-        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameTwoTitle, gameTwoText, helpActionsTwo));
-        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameThreeTitle, gameThreeText, helpActionsThree));
+        helpColumns.add(new CarouselColumn(gameTwoImage, gameTwoTitle, gameTwoText, helpActionsTwo));
+        helpColumns.add(new CarouselColumn(gameThreeImage, gameThreeTitle, gameThreeText, helpActionsThree));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFourTitle, gameFourText, helpActionsFour));
-        helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFiveTitle, gameFiveText, helpActionsFive));
+        helpColumns.add(new CarouselColumn(gameFiveImage, gameFiveTitle, gameFiveText, helpActionsFive));
     }
 
     @Autowired

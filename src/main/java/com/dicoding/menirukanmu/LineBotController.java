@@ -37,7 +37,7 @@ public class LineBotController
             "3 --> Tepok Nyamuk\n" +
             "4 --> Tahu bulat\n" +
             "5 --> Lantai Hotel\n\n" +
-            "Ketik \"bye tido\" untuk mengeluarkan tido dari grup";
+            "Ketik \"bye tido\" untuk mengeluarkan tido dari grup\n";
     String headerMessage = "============\nGame Dimulai \n============\n\n";
     String footMessage = "Game berakhir, Terima kasih sudah bermain :)";
     String endMessage = "Ketik \"soal\" untuk meminta kembali soal\nKetik \"end game\" untuk mengakhiri permainan";
@@ -70,6 +70,8 @@ public class LineBotController
     List<CarouselColumn> helpColumns = new ArrayList<>();
     CarouselTemplate helpCarouselTemplate = new CarouselTemplate(helpColumns);
     TemplateMessage tmHelp = new TemplateMessage(startMessage, helpCarouselTemplate);
+
+    List<Action> endAction = new ArrayList<>();
 
     public LineBotController() {
         /*SOAL 1*/
@@ -228,6 +230,8 @@ public class LineBotController
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameThreeTitle, gameThreeText, helpActionsThree));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFourTitle, gameFourText, helpActionsFour));
         helpColumns.add(new CarouselColumn(joinMessageImageUrl, gameFiveTitle, gameFiveText, helpActionsFive));
+
+        endAction.add(new MessageAction("End Game", "end game"));
     }
 
     @Autowired
@@ -470,15 +474,20 @@ public class LineBotController
     }
 
     private void replyToUser(String rToken, String messageFlag){
-        TemplateMessage message = null;
         //        TextMessage textMessage = new TextMessage(messageFlag);
         //        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
+        ReplyMessage replyMessage = null;
         if (messageFlag.equalsIgnoreCase("join")) {
-            message = tmJoin;
+            TemplateMessage message = tmJoin;
+            replyMessage = new ReplyMessage(rToken, message);
         } else if (messageFlag.equalsIgnoreCase("help")) {
-            message = tmHelp;
+            TemplateMessage message = tmHelp;
+            replyMessage = new ReplyMessage(rToken, message);
+        } else {
+            TextMessage message = new TextMessage(messageFlag);
+            replyMessage = new ReplyMessage(rToken, message);
         }
-        ReplyMessage replyMessage = new ReplyMessage(rToken, message);
+
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)

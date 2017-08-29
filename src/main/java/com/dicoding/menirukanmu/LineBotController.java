@@ -48,9 +48,9 @@ public class LineBotController
     String gameTwoTitle = "Yang ketiga";
     String gameTwoText = "Untuk setiap pasangan, pasti akan selalu ada pihak ketiga";
     String gameThreeTitle = "Tepok Nyamuk";
-    String gameThreeText = "Bagi yang kesel kalo digigit nyamuk, yuk kita berhitung bersama berapa nyamuk yang mati";
+    String gameThreeText = "Kesel kalo digigit nyamuk? Yuk kita tepok nyamuk bersama";
     String gameFourTitle = "Tahu Bulat";
-    String gameFourText = "Tahu bulat itu enak sekali, berapa banyak tahu yang harus kita beli ya ?";
+    String gameFourText = "Belajar berhitung menggunakan tahu bulat ?";
     String gameFiveTitle = "Hotel digital";
     String gameFiveText = "Tido kesasar nih di hotel digital, di lantai mana ya doi sekarang ?";
 

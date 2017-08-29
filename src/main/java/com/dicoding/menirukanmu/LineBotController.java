@@ -475,7 +475,7 @@ public class LineBotController
         //        TemplateMessage templateMessage = new TemplateMessage("ini alt text", carouselTemplate);
         if (messageFlag.equalsIgnoreCase("join")) {
             message = tmJoin;
-        } else if (messageFlag.equalsIgnoreCase("join")) {
+        } else if (messageFlag.equalsIgnoreCase("help")) {
             message = tmHelp;
         }
         ReplyMessage replyMessage = new ReplyMessage(rToken, message);

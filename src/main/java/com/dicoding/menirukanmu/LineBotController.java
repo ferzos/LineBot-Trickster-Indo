@@ -52,7 +52,7 @@ public class LineBotController
     String gameFourTitle = "Tahu Bulat";
     String gameFourText = "Belajar berhitung menggunakan tahu bulat ?";
     String gameFiveTitle = "Hotel digital";
-    String gameFiveText = "Tido kesasar nih di hotel digital, di lantai mana ya doi sekarang ?";
+    String gameFiveText = "Bantu tido tahu dimana dia sekarang yuk";
 
     TreeMap<Integer, String[]> soal1;
     ArrayList<String> soal2Pertama;

@@ -475,14 +475,12 @@ public class LineBotController
         ReplyMessage replyMessage = null;
         if (messageFlag.equalsIgnoreCase("join")) {
             TemplateMessage message = tmJoin;
-            replyMessage = new ReplyMessage(rToken, message);
         } else if (messageFlag.equalsIgnoreCase("help")) {
             TemplateMessage message = tmHelp;
-            replyMessage = new ReplyMessage(rToken, message);
         } else {
             TextMessage message = new TextMessage(messageFlag);
-            replyMessage = new ReplyMessage(rToken, message);
         }
+        replyMessage = new ReplyMessage(rToken, message);
         try {
             Response<BotApiResponse> response = LineMessagingServiceBuilder
                 .create(lChannelAccessToken)
